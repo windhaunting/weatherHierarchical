@@ -21,7 +21,7 @@ class graphCreation:
         stateCityMap, stateToCountyMap, countyToCityMap = readcityStateExl()
         for state, city in stateCityMap.items():
             if state not in graphNodeNameToIdMap:
-                graphNodeNameToIdMap[state] = startNodeId
+                graphNodeNameToIdMap[state] = self.startNodeId
                 startNodeId += 1
             if city not in raphNodeNameToIdMap:
                 graphNodeNameToIdMap[city] = startNodeId
@@ -29,7 +29,8 @@ class graphCreation:
             
      
     #read the output of extrated daily weather (getDailyWeather) into edge list
-    def read
+    def readstationWeatherOutput():
+        x = 1
 
 
 def main():
