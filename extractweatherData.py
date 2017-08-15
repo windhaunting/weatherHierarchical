@@ -15,8 +15,8 @@ from readCityState import readcitySatesExecute
 
 #set global filters (we will not filter by year)
 def getDailyWeather(inputFile, outFile):
-    ghcndextractor.countries = ["US"]
-    ghcndextractor.states = ["NJ"]     
+    #ghcndextractor.countries = ["US"]
+    #ghcndextractor.states = ["NJ"]     
     
     ghcndextractor.ghcnFolder = inputFile  #"/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData"   
     
@@ -27,7 +27,6 @@ def getDailyWeather(inputFile, outFile):
     #print ("dayCSV: ", type(dayCSV))
     #dayDictList01= ghcndextractor.getDailyData(["12"], ["25"], ["USW00014780"])
     #print ("dayDictList1: ", dayDictList01)
-    
     #generate month:
     months = []
     
@@ -51,6 +50,7 @@ def getDailyWeather(inputFile, outFile):
         writeListRowToFileWriterTsv(fd, [ele], '\t')
 
 
+#get daily weather of usa
 inputFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData"   
 outFile =  "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outFile01"
 os.remove(outFile) if os.path.exists(outFile) else None

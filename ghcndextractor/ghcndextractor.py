@@ -439,7 +439,9 @@ global stationlist
 global stationIDCodes
 global countries
 global states
+global stationIDCodesToNameMap
 global stationNameToIDCodesMap
+
 states = []
 countries = []
 measurements = Measurments() 
@@ -486,8 +488,8 @@ def readStationsFile():
         latitude= decimal.Decimal(eachReadLine[13:20].strip())
         longitude = decimal.Decimal(eachReadLine[22:30].strip())
         elevationStr= eachReadLine[32:37]
-        state = eachReadLine[38:40].strip()
-        name = eachReadLine[42:71].strip()
+        state = eachReadLine[38:41].strip()
+        name = eachReadLine[41:71].strip()
         
         if ((not countries) or (countryCode in countries)):
             if ((not states) or (state in states)):
@@ -498,8 +500,8 @@ def readStationsFile():
                 stationName = (state + ","+ name).lower()
                 if stationID not in stationIDCodesToNameMap:
                     stationIDCodesToNameMap[stationID] = stationName
-                if name.lower() not in stationNameToIDCodesMap:
-                    stationNameToIDCodesMap[name.lower()] = stationID
+                if stationName not in stationNameToIDCodesMap:
+                    stationNameToIDCodesMap[stationName] = stationID
                 
 
 

@@ -11,6 +11,7 @@ Created on Thu Aug 10 23:57:31 2017
 
 import pandas as pd
 from ghcndextractor import ghcndextractor
+from commons import writeListRowToFileWriterTsv
 
 #read usa city and state from a file
 def readcityStateExl(inputXlsFile):
@@ -58,22 +59,31 @@ def readcityStateExl(inputXlsFile):
     
     return stateCityMap, stateToCountyMap, countyToCityMap
     
-#get all usa's station id                  ;
-def getUSACodeId(stateCityMap):
+#get all usa's station id, and output to a file                ;
+def getUSACodeId(stateCityMap, outFile):
       #(stationIDCodesToNameMap[stationMonth.stationID] in stateCityMap) and
         ghcndextractor.readStationsFile()
 
         stationNameToIDCodesMap =  ghcndextractor.stationNameToIDCodesMap
 
+        print ("stationNameToIDCodesMap: ", len(stationNameToIDCodesMap), len(stateCityMap))
+        #debug
+       # while(stationNameToIDCodesMap:
         USAStationLst = []
         #stationNametoCodeId
         for k in stateCityMap.keys():
-            for stName in stationNameToIDCodesMap:
+            for stName, stcodeId in stationNameToIDCodesMap.items():
+                #print ("k: ", k, stName)
                 if k in stName:
-                    USAStationLst.append(stationNameToIDCodesMap[stName])
+                    USAStationLst.append(stcodeId)
         
         print ("USAStationLst: ", len(USAStationLst))
-    
+        
+        #write into file for later read, because it takes too much time for reading every time
+        fd = open(outFile,'a')
+        for ele in USAStationLst:
+            writeListRowToFileWriterTsv(fd, [ele], '\t')
+        
 #main entry
 def readcitySatesExecute():
     ghcndextractor.ghcnFolder = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/" 
@@ -81,7 +91,9 @@ def readcitySatesExecute():
     inputXlsFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/List-of-Cities-States-and-Counties.xlsx"
     stateCityMap, stateToCountyMap, countyToCityMap = readcityStateExl(inputXlsFile)
 
-    getUSACodeId(stateCityMap)
+    outfileUSAStationId = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outfileUSAStationId"
+    
+    getUSACodeId(stateCityMap, outfileUSAStationId)
     return stateCityMap, stateToCountyMap, countyToCityMap
 
 readcitySatesExecute()
