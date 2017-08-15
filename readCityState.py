@@ -30,7 +30,6 @@ def readcityStateExl(inputXlsFile):
     cityLst = sheetX['City']
     print( len(cityLst), cityLst[1])
 
-
     countyLst = sheetX['County']
 
     print( len(countyLst), countyLst[1])

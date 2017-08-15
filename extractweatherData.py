@@ -71,7 +71,7 @@ def main():
     
     #generate month:
     months = []
-    for i in range(1, 13):
+    for i in range(1, 2):
         months.append(str(i))
     
     days = []

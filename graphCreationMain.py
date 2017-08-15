@@ -21,7 +21,8 @@ class graphCreationClass:
     startNodeId = 1            #graph node Id starting from 1
     graphNodeNameToIdMap  = {}            #store node name -> ID map
     gNodeIdToNameMap  = {}               #store node id -> name  map
-
+    
+    graNodeTypeMap = {}                 #node id to type
     edgeList = blist()                       #graph edge list
     def __init__(self):
       pass
@@ -35,16 +36,26 @@ class graphCreationClass:
             if state not in graphCreationClass.graphNodeNameToIdMap:
                 graphCreationClass.graphNodeNameToIdMap[state] = graphCreationClass.startNodeId
                 graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = state
+                #node type map
+                if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                    graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
+
                 
                 graphCreationClass.startNodeId += 1
+                
             #store county and id mapping
             if county not in graphCreationClass.graphNodeNameToIdMap:
                 graphCreationClass.graphNodeNameToIdMap[county] = graphCreationClass.startNodeId
+                #node type map
+                if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                    graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
+
                 graphCreationClass.startNodeId += 1
             #get edge list for each pair
-            edgeProp = 'edgeProp'             #lower hierarchical relation
-            edgeList.append([state, county, edgeProp]))
-     
+            edgeProp = 'lower'                          #lower hierarchical relation
+            graphCreationClass.edgeList.append([state, county, edgeProp])
+            
+            
         #get county and city edge list
         for county, city in countyToCityMap.items():
             #store state and id mapping
@@ -58,8 +69,8 @@ class graphCreationClass:
                 graphCreationClass.graphNodeNameToIdMap[city] = graphCreationClass.startNodeId
                 graphCreationClass.startNodeId += 1
             #get edge list for each pair
-            edgeProp = 'edgeProp'             #lower hierarchical relation
-            edgeList.append([state, city, edgeProp]))
+            edgeProp = 'lower'             #lower hierarchical relation
+            graphCreationClass.edgeList.append([state, city, edgeProp])
     
     
     #read the output of extrated daily weather (getDailyWeather) into edge list
@@ -71,7 +82,7 @@ def main():
     
     gcObj = graphCreationClass()
     gcObj.createNodeIdPlaces()    
-    
+    print ('len graphCreationClass edgelist: ', len(graphCreationClass.edgeList))
     
 if __name__== "__main__":
   main()
