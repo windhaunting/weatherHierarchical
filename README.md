@@ -1,3 +1,9 @@
+create hierarchical data of weather
+
+
+--reference from ghcndextractor
+
+
 # ghcndextractor
 A simple extractor for the GHCN-Daily dataset .dly files into CSV or dict format.  It also enables filtering by  time period ranges (in years), country and state/province if they are relevant to the countries in question and individual observation stations.  This filtering is practical as the GHCND .dly dataset is very large (2 1/2 gb in compressed format as of early 2016).  
 
