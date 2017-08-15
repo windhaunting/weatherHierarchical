@@ -26,6 +26,7 @@ class graphCreation:
             if city not in raphNodeNameToIdMap:
                 graphNodeNameToIdMap[city] = startNodeId
                 startNodeId += 1
+            #get edge list
             
      
     #read the output of extrated daily weather (getDailyWeather) into edge list
