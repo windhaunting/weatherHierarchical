@@ -1,19 +1,20 @@
-create hierarchical data of weather
+Create hierarchical data of weather
 
 
-read the city, town of USA
-read the city in China
+Read the city, town of USA
+Read the city in China
 
-read the station weather data
+Read the station weather data
 
-finally combine them to get the hierarchical graph
-
-
-
+Finally combine them to get the hierarchical graph
 
 
 
 
 
---reference from ghcndextractor
+reference:
+
+ghcndextractor.py  reference from ghcndextractor
+ 
+
 
