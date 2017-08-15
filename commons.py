@@ -7,7 +7,8 @@ Created on Wed Dec 21 11:52:41 2016
 
 import csv
 
-def mycsv_reader(csv_reader): 
+#read file
+def mycsv_reader(csv_reader):         #
   while True: 
     try: 
       yield next(csv_reader) 
@@ -16,12 +17,15 @@ def mycsv_reader(csv_reader):
       pass
     continue 
   return
-  
+
+
+#write list
 def writeListRowToFileWriterTsv(fd, listRow, delimiter):
  #   with open(outFile, "a") as fd:
     writer = csv.writer(fd, delimiter = delimiter, lineterminator='\n')
     writer.writerows([listRow])
 
+#write string
 def appendStringRowToFileWriterTsv(fd, stringRow):
  #   with open(outFile, "a") as fd:
     #fd = open(outFile,'a')

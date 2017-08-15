@@ -75,17 +75,18 @@ def getUSACodeId(stateCityMap, outFile):
             for stName, stcodeId in stationNameToIDCodesMap.items():
                 #print ("k: ", k, stName)
                 if k in stName:
-                    USAStationLst.append(stcodeId)
+                    USAStationLst.append([stcodeId, k])
         
-        print ("USAStationLst: ", len(USAStationLst))
+        #print ("USAStationLst: ", len(USAStationLst))
         
         #write into file for later read, because it takes too much time for reading every time
         fd = open(outFile,'a')
         for ele in USAStationLst:
-            writeListRowToFileWriterTsv(fd, [ele], '\t')
+            writeListRowToFileWriterTsv(fd, ele, '\t')
         
 #main entry
 def readcitySatesExecute():
+    
     ghcndextractor.ghcnFolder = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/" 
     
     inputXlsFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/List-of-Cities-States-and-Counties.xlsx"
@@ -96,4 +97,9 @@ def readcitySatesExecute():
     getUSACodeId(stateCityMap, outfileUSAStationId)
     return stateCityMap, stateToCountyMap, countyToCityMap
 
-readcitySatesExecute()
+def main():
+    readcitySatesExecute()
+
+
+if __name__== "__main__":
+  main()
