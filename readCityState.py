@@ -12,7 +12,7 @@ Created on Thu Aug 10 23:57:31 2017
 import pandas as pd
 from ghcndextractor import ghcndextractor
 
-
+#read usa city and state from a file
 def readcityStateExl(inputXlsFile):
     
 
@@ -73,8 +73,10 @@ def getUSACodeId(stateCityMap):
                     USAStationLst.append(stationNameToIDCodesMap[stName])
         
         print ("USAStationLst: ", len(USAStationLst))
-        
+    
+#main entry
 def readcitySatesExecute():
+    ghcndextractor.ghcnFolder = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/" 
     
     inputXlsFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/List-of-Cities-States-and-Counties.xlsx"
     stateCityMap, stateToCountyMap, countyToCityMap = readcityStateExl(inputXlsFile)
