@@ -45,8 +45,6 @@ def getDailyWeather(inputFile, years, months, days, outFile):
     #dayDictList01= ghcndextractor.getDailyData(["12"], ["25"], ["USW00014780"])
     #print ("dayDictList1: ", dayDictList01)
         
-    stateCityMap, stateToCountyMap, countyToCityMap = readcitySatesExecute()
-
     #dayDictList= ghcndextractor.getDailyUSDataYears(["2001"], ["12"], ["25"], ["USW00014780"])
     #dayDictList= ghcndextractor.getDailyUSDataYears(["1988"], ["12"], ["25"], ["USW00014780"])
     

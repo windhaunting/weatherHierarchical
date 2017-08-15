@@ -7,35 +7,71 @@ Created on Tue Aug 15 12:49:10 2017
 """
 
 #main function for creation graph data
-from readCityState import readcityStateExl
+from readCityState import readcitySatesExecute
+from blist import blist
 
-class graphCreation:
+class nodeType:
+    placeType = 1
+    timeType = 2             #time type, year, month or day time
+    tempType = 3             #temperature range
+    prcpType = 4             #precipation
+    snowType = 5             #snow depth
+    
+class graphCreationClass:
     startNodeId = 1            #graph node Id starting from 1
-
     graphNodeNameToIdMap  = {}            #store node name -> ID map
+    gNodeIdToNameMap  = {}               #store node id -> name  map
+
+    edgeList = blist()                       #graph edge list
     def __init__(self):
-      self.x = 1
+      pass
       
       
-    def createNodeIdPlaces():
-        stateCityMap, stateToCountyMap, countyToCityMap = readcityStateExl()
-        for state, city in stateCityMap.items():
-            if state not in graphNodeNameToIdMap:
-                graphNodeNameToIdMap[state] = self.startNodeId
-                startNodeId += 1
-            if city not in raphNodeNameToIdMap:
-                graphNodeNameToIdMap[city] = startNodeId
-                startNodeId += 1
-            #get edge list
-            
+    def createNodeIdPlaces(self):
+        stateCityMap, stateToCountyMap, countyToCityMap = readcitySatesExecute()
+        #get state and county edge list
+        for state, county in stateToCountyMap.items():
+            #store state and id mapping
+            if state not in graphCreationClass.graphNodeNameToIdMap:
+                graphCreationClass.graphNodeNameToIdMap[state] = graphCreationClass.startNodeId
+                graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = state
+                
+                graphCreationClass.startNodeId += 1
+            #store county and id mapping
+            if county not in graphCreationClass.graphNodeNameToIdMap:
+                graphCreationClass.graphNodeNameToIdMap[county] = graphCreationClass.startNodeId
+                graphCreationClass.startNodeId += 1
+            #get edge list for each pair
+            edgeProp = 'edgeProp'             #lower hierarchical relation
+            edgeList.append([state, county, edgeProp]))
      
+        #get county and city edge list
+        for county, city in countyToCityMap.items():
+            #store state and id mapping
+            if county not in graphCreationClass.graphNodeNameToIdMap:
+                graphCreationClass.graphNodeNameToIdMap[county] = graphCreationClass.startNodeId
+                graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = county
+                
+                graphCreationClass.startNodeId += 1
+            #store city and id mapping
+            if city not in graphCreationClass.graphNodeNameToIdMap:
+                graphCreationClass.graphNodeNameToIdMap[city] = graphCreationClass.startNodeId
+                graphCreationClass.startNodeId += 1
+            #get edge list for each pair
+            edgeProp = 'edgeProp'             #lower hierarchical relation
+            edgeList.append([state, city, edgeProp]))
+    
+    
     #read the output of extrated daily weather (getDailyWeather) into edge list
-    def readstationWeatherOutput():
+    def readstationWeatherOutput(self):
         x = 1
 
 
 def main():
-    x = 1
+    
+    gcObj = graphCreationClass()
+    gcObj.createNodeIdPlaces()    
+    
     
 if __name__== "__main__":
   main()

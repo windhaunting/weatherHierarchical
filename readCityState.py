@@ -92,10 +92,13 @@ def readcitySatesExecute():
     inputXlsFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/List-of-Cities-States-and-Counties.xlsx"
     stateCityMap, stateToCountyMap, countyToCityMap = readcityStateExl(inputXlsFile)
 
+    return stateCityMap, stateToCountyMap, countyToCityMap
+
+def getUSAStationExecute():
+    stateCityMap, stateToCountyMap, countyToCityMap = readcitySatesExecute()
     outfileUSAStationId = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outfileUSAStationId"
     
     getUSACodeId(stateCityMap, outfileUSAStationId)
-    return stateCityMap, stateToCountyMap, countyToCityMap
 
 def main():
     readcitySatesExecute()

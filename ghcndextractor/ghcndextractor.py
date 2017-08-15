@@ -13,6 +13,7 @@ import os
 import re
 import decimal
 import codecs
+from blist import blist
 
 
 #Preferences
@@ -657,7 +658,7 @@ def getDailyData(months = [], days = [], stations = []):
 #get daily data of united states with year;  by fubaowu
 def getDailyUSDataYears(years = [], months = [], days = [], stations = []):
         
-    dataRows = []
+    dataRows = blist()
     for stationMonthCode in measurements.fileMeasurements.keys():
         try:
             stationMonth = measurements.fileMeasurements[stationMonthCode]
