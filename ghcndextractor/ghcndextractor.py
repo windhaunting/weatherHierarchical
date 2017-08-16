@@ -686,19 +686,9 @@ def getDailyUSDataYears(years = [], months = [], days = [], stations = []):
                 for day in days:
                     try:
                         avgTmax, avgTmin, sumPrcp, sumSnow, avgSnwd, avgAcmm, avgAcss = stationMonth.getDaily(day)
-                        dataRow = { "stationName": stationIDCodesToNameMap[stationMonth.stationID],
-                                    'stationID': stationMonth.stationID,
-                                    'year': stationMonth.year,
-                                    'month': stationMonth.month,
-                                    'day': day,
-                                    'tmax': avgTmax,
-                                    'tmin': avgTmin,
-                                    'snwd': avgSnwd,
-                                    'acmm': avgAcmm,
-                                    'acss': avgAcss,
-                                    'prcp': sumPrcp,
-                                    'snow': sumSnow
-                                    }
+                        dataRow = [stationMonth.stationID, stationMonth.year, stationMonth.month,
+                                     day, avgTmax, avgTmin,avgSnwd,avgAcmm,
+                                     avgAcss, sumPrcp, sumSnow]
                         dataRows.append(dataRow)
                     except Exception as e:
                         pass
