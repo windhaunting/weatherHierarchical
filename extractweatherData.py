@@ -14,7 +14,6 @@ import csv
 from commons import writeListRowToFileWriterTsv
 
 from ghcndextractor import ghcndextractor
-from readCityState import readcitySatesExecute
 
 #set global filters (we will not filter by year)
 stationIDCodesUSALst = []
