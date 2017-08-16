@@ -24,14 +24,12 @@ def readcityStateExl(inputXlsFile):
 
 
     stateLst = sheetX['State']
-
     print( len(stateLst), stateLst[1])
 
     cityLst = sheetX['City']
     print( len(cityLst), cityLst[1])
 
     countyLst = sheetX['County']
-
     print( len(countyLst), countyLst[1])
 
     stateCityMap = {}          #state + " " + city map

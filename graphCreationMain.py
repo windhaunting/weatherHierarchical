@@ -31,7 +31,7 @@ class graphCreationClass:
     def createNodeIdPlaces(self):
         stateCityMap, stateToCountyMap, countyToCityMap = readcitySatesExecute()
         #get state and county edge list
-        for state, county in stateToCountyMap.items():
+        for state, counties in stateToCountyMap.items():
             #store state and id mapping
             if state not in graphCreationClass.graphNodeNameToIdMap:
                 graphCreationClass.graphNodeNameToIdMap[state] = graphCreationClass.startNodeId
@@ -44,35 +44,45 @@ class graphCreationClass:
                 graphCreationClass.startNodeId += 1
                 
             #store county and id mapping
-            if county not in graphCreationClass.graphNodeNameToIdMap:
-                graphCreationClass.graphNodeNameToIdMap[county] = graphCreationClass.startNodeId
-                #node type map
-                if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
-                    graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
-
-                graphCreationClass.startNodeId += 1
-            #get edge list for each pair
-            edgeProp = 'lower'                          #lower hierarchical relation
-            graphCreationClass.edgeList.append([state, county, edgeProp])
+            for county in counties:
+                if county not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[county] = graphCreationClass.startNodeId
+                    #node type map
+                    if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
+    
+                    graphCreationClass.startNodeId += 1
+                #get edge list for each pair
+                edgeProp = 'lower'                          #lower hierarchical relation
+                graphCreationClass.edgeList.append([state, county, edgeProp])
             
             
         #get county and city edge list
-        for county, city in countyToCityMap.items():
+        for county, cities in countyToCityMap.items():
             #store state and id mapping
             if county not in graphCreationClass.graphNodeNameToIdMap:
                 graphCreationClass.graphNodeNameToIdMap[county] = graphCreationClass.startNodeId
                 graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = county
-                
+                #node type map
+                if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                    graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
+
+
                 graphCreationClass.startNodeId += 1
             #store city and id mapping
-            if city not in graphCreationClass.graphNodeNameToIdMap:
-                graphCreationClass.graphNodeNameToIdMap[city] = graphCreationClass.startNodeId
-                graphCreationClass.startNodeId += 1
-            #get edge list for each pair
-            edgeProp = 'lower'             #lower hierarchical relation
-            graphCreationClass.edgeList.append([state, city, edgeProp])
+            for city in cities:
+                if city not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[city] = graphCreationClass.startNodeId
+                    #node type map
+                    if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
+                        
+                    graphCreationClass.startNodeId += 1
+                #get edge list for each pair
+                edgeProp = 'lower'             #lower hierarchical relation
+                graphCreationClass.edgeList.append([state, city, edgeProp])
     
-    
+        for 
        
     #read the output of extrated daily weather (getDailyWeather) into edge list
     def readstationWeatherOutput(self):
