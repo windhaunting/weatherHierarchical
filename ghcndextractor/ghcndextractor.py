@@ -656,6 +656,21 @@ def getDailyData(months = [], days = [], stations = []):
 
 
 #get daily data of united states with year;  by fubaowu
+'''
+ dataRow = { "stationName": stationIDCodesToNameMap[stationMonth.stationID],
+                                    'stationID': stationMonth.stationID,
+                                    'year': stationMonth.year,
+                                    'month': stationMonth.month,
+                                    'day': day,
+                                    'tmax': avgTmax,
+                                    'tmin': avgTmin,
+                                    'snwd': avgSnwd,
+                                    'acmm': avgAcmm,
+                                    'acss': avgAcss,
+                                    'prcp': sumPrcp,
+                                    'snow': sumSnow
+                                    }
+'''
 def getDailyUSDataYears(years = [], months = [], days = [], stations = []):
         
     dataRows = blist()
