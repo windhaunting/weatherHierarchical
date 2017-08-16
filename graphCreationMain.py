@@ -73,6 +73,7 @@ class graphCreationClass:
             graphCreationClass.edgeList.append([state, city, edgeProp])
     
     
+       
     #read the output of extrated daily weather (getDailyWeather) into edge list
     def readstationWeatherOutput(self):
         x = 1
