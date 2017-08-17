@@ -41,7 +41,6 @@ class graphCreationClass:
                 if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                     graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
 
-                
                 graphCreationClass.startNodeId += 1
                 
             #store county and id mapping
@@ -56,7 +55,7 @@ class graphCreationClass:
                 #get edge list for each pair
                 edgeProp = 'lower'                          #lower hierarchical relation
                 graphCreationClass.edgeList.append([state, county, edgeProp])
-            
+                graphCreationClass.edgeList.append([state, county, edgeProp])
             
         #get county and city edge list
         for county, cities in countyToCityMap.items():
@@ -85,6 +84,7 @@ class graphCreationClass:
     
 
     #read the output of extrated daily weather (getDailyWeather) into edge list
+    #'stationID','year','month','day','tmax','tmin','snwd','acmm', 'acss','prcp','snow'])
     def readstationWeatherOutput(self, inputFile):
         df = pd.read_csv(inputFile, delimiter = "\t")
         

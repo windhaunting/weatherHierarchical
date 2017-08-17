@@ -574,7 +574,7 @@ def readDailyFiles():
                 
                 for eachReadLine in allLines:
                     readRow(eachReadLine)
-                
+    print("Loading data done")
                 
 
 def getCSVStationMetaData():
