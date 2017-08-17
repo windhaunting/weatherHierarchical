@@ -6,10 +6,12 @@ Created on Thu Aug 10 10:06:05 2017
 @author: fubao
 """
 
+
 # year 1945 to 2010 ?
 import os
 import codecs
 import csv
+import time
 
 from commons import writeListRowToFileWriterTsv
 
@@ -20,7 +22,6 @@ stationIDCodesUSALst = []
 
 #read all the station code Id of USA
 def readUSAStation(inputFile):
-    stationIDCodesUSALst = []
     with codecs.open(inputFile, 'rU') as csvfile:
          tsvin = csv.reader(csvfile, delimiter='\t')
          for row in tsvin:
@@ -61,7 +62,7 @@ def main():
     #read USA stationCodeId
     outfileUSAStationId = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outfileUSAStationId"
     readUSAStation(outfileUSAStationId)
-    
+    print (" len stationIDCodesUSALst: ", len(stationIDCodesUSALst))
     #get daily weather of usa
     #generate years
     years = []
@@ -74,14 +75,16 @@ def main():
         months.append(str(i))
     
     days = []
-    for i in range(1, 32):
+    for i in range(1, 2):
         days.append(str(i))
         
     inputFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData"   
     outFile =  "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outFile01"
     os.remove(outFile) if os.path.exists(outFile) else None
+    start = time.time()
     getDailyWeather(inputFile, years, months, days, outFile)
-    
+    end = time.time()
+    print("time elpased for getDailyWeather: ", end - start)
 
 if __name__== "__main__":
   main()

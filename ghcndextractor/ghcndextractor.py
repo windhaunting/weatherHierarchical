@@ -675,7 +675,7 @@ def getDailyUSDataYears(years = [], months = [], days = [], stations = []):
         
     dataRows = blist()
     dataRows.append(['stationID','year','month','day','tmax','tmin','snwd','acmm', 'acss','prcp','snow'])
-
+    print ("enter getDailyUSDataYears: ")
     for stationMonthCode in measurements.fileMeasurements.keys():
         try:
             stationMonth = measurements.fileMeasurements[stationMonthCode]
