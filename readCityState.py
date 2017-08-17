@@ -59,10 +59,9 @@ def readcityStateExl(inputXlsFile):
 #get all usa's station id, and output to a file                ;
 def getUSACodeId(stateCityMap, outFile):
       #(stationIDCodesToNameMap[stationMonth.stationID] in stateCityMap) and
-        ghcndextractor.readStationsFile()
+        stationNameToIDCodesMap = ghcndextractor.readStationsFile()
 
-        stationNameToIDCodesMap =  ghcndextractor.stationNameToIDCodesMap
-
+         
         print ("stationNameToIDCodesMap: ", len(stationNameToIDCodesMap), len(stateCityMap))
         #debug
        # while(stationNameToIDCodesMap:

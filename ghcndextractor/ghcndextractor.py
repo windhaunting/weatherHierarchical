@@ -440,15 +440,15 @@ global stationlist
 global stationIDCodes
 global countries
 global states
-global stationIDCodesToNameMap
-global stationNameToIDCodesMap
+#global stationIDCodesToNameMap
+#global stationNameToIDCodesMap
 
 states = []
 countries = []
 measurements = Measurments() 
 stationlist = []
 stationIDCodes = []
-stationIDCodesToNameMap = {}
+#stationIDCodesToNameMap = {}
 stationNameToIDCodesMap = {}
 
 
@@ -499,11 +499,11 @@ def readStationsFile():
                 stationIDCodes.append(stationID)
                 #cityName = ' '.join(name.split(' ')[:-2])
                 stationName = (state + ","+ name).lower()
-                if stationID not in stationIDCodesToNameMap:
-                    stationIDCodesToNameMap[stationID] = stationName
+                #if stationID not in stationIDCodesToNameMap:
+                #    stationIDCodesToNameMap[stationID] = stationName
                 if stationName not in stationNameToIDCodesMap:
                     stationNameToIDCodesMap[stationName] = stationID
-                
+    return stationNameToIDCodesMap
 
 
 def readRow(lineOfData):
@@ -574,9 +574,48 @@ def readDailyFiles():
                 
                 for eachReadLine in allLines:
                     readRow(eachReadLine)
-    print("Loading data done")
+    print("Loading data done ")
                 
 
+
+#select station id codes to read                
+def readDailyFilesSelectStation(selectStationIDCodes):
+    global measurements
+    global ghcnFolder
+    global stationlist
+    #global stationIDCodes
+    global countries
+    global states
+   
+    #Go through the condition repository directory and load the files up
+    dataLocation = os.path.join(ghcnFolder, "ghcnd_all")
+    fileList = os.listdir(dataLocation)
+    
+    #Count the files to provide feedback
+    fileCount = 0
+    for fileName in fileList:
+        if (fileName[0:11] in stationIDCodes):
+            filePath = os.path.join(dataLocation, fileName)
+            if re.search( '.dly', fileName) is not None:
+                fileCount = fileCount + 1
+            
+    print("Loading data from %s .dly files" %fileCount)
+               
+    for fileName in fileList:
+        #Graph.logQ.put( [logType , logLevel.DEBUG , method , 'Examining %s' % package])
+        if (fileName[0:11] in stationIDCodes):
+            filePath = os.path.join(dataLocation, fileName)
+            if re.search( '.dly', fileName) is not None:
+                readLoc = codecs.open(filePath, "r", "utf-8")
+                allLines = readLoc.readlines()
+                readLoc.close
+                
+                for eachReadLine in allLines:
+                    readRow(eachReadLine)
+    print("Loading data done ")
+                
+    
+    
 def getCSVStationMetaData():
     global csvSeperator
     csvData = []
