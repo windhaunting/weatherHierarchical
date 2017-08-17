@@ -9,6 +9,7 @@ Created on Tue Aug 15 12:49:10 2017
 #main function for creation graph data
 from readCityState import readcitySatesExecute
 from blist import blist
+import pandas as pd
 
 class nodeType:
     placeType = 1
@@ -85,7 +86,7 @@ class graphCreationClass:
 
     #read the output of extrated daily weather (getDailyWeather) into edge list
     def readstationWeatherOutput(self, inputFile):
-        x = 1
+        df = pd.read_csv(inputFile, delimiter = "\t")
         
 
 
@@ -94,6 +95,8 @@ def main():
     gcObj = graphCreationClass()
     gcObj.createNodeIdPlaces()    
     print ('len graphCreationClass edgelist: ', len(graphCreationClass.edgeList))
+    
+    gcObj.readstationWeatherOutput()
     
 if __name__== "__main__":
   main()
