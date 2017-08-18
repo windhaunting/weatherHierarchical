@@ -12,6 +12,7 @@ import os
 import codecs
 import csv
 import time
+from shutil import copyfile
 
 from commons import writeListRowToFileWriterTsv
 
@@ -45,6 +46,7 @@ def getDailyWeather(inputFile, years, months, days, stationIDCodesLst, outFile):
     #print ("dayCSV: ", type(dayCSV))
     #dayDictList01= ghcndextractor.getDailyData(["12"], ["25"], ["USW00014780"])
     #print ("dayDictList1: ", dayDictList01)
+    
     ghcndextractor.readStationsFileSelectStation(stationIDCodesLst)
     ghcndextractor.readDailyFilesSelectStation(stationIDCodesLst)
     dayDictList= ghcndextractor.getDailyUSDataYears(["2001"], ["12"], ["25"], ["USW00014780"])
