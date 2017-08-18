@@ -12,7 +12,6 @@ import os
 import codecs
 import csv
 import time
-from shutil import copyfile
 
 from commons import writeListRowToFileWriterTsv
 

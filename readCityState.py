@@ -12,6 +12,8 @@ import os
 import pandas as pd
 from ghcndextractor import ghcndextractor
 from commons import writeListRowToFileWriterTsv
+from shutil import copyfile
+
 
 #read usa city and state from a file
 def readcityStateExl(inputXlsFile):
@@ -111,7 +113,10 @@ def getOneStateStationCodeId(inputUSAStationFile, state):
 
 def getUSAStationDlyFiles():
     usadir = "../../USAdlyFileDir"
-    fileList = os.listdir(dataLocation)
+    fileList = os.listdir(usadir)       #get
+    for file in fileList:
+        if file.split('.')[0] in 
+        copyfile()
 
     
 def main():
