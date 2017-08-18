@@ -102,12 +102,15 @@ def getUSAStationExecute():
 def getOneStateStationCodeId(inputUSAStationFile, state):
     df = pd.read_csv(inputUSAStationFile,  names = ["stationId", "stateName"], delimiter = '\t')
     
-    print ("df: ",df)
     #df.apply(numpy.sum, axis=1) # equiv to df.sum(1)
-    df[df['stateName'].split(',')[0] in state]['stationId']
+    df['state'] = df['stateName'].apply(lambda x: x.split(',')[0].strip() == state)
+    stateStationCodeId = df[df['state'] == True]['stationId']                 #series type
+    print ("df: ",len(df), len(stateStationCodeId), type(stateStationCodeId))
+    return stateStationCodeId
+
 
 def main():
-    getUSAStationExecute()
+    #getUSAStationExecute()
 
     #test
     outfileUSAStationId = "../output/outfileUSAStationId"

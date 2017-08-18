@@ -61,7 +61,7 @@ def getDailyWeather(inputFile, years, months, days, outFile):
 def main():
     
     #read USA stationCodeId
-    outfileUSAStationId = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outfileUSAStationId"
+    outfileUSAStationId = "../output/outfileUSAStationId"
     readUSAStation(outfileUSAStationId)
     print (" len stationIDCodesUSALst: ", len(stationIDCodesUSALst), stationIDCodesUSALst[0], stationIDCodesUSALst[1])
     #get daily weather of usa
@@ -82,6 +82,7 @@ def main():
     inputFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData"   
     outFile =  "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outFile01"
     os.remove(outFile) if os.path.exists(outFile) else None
+    getOneStateStationCodeId()
     start = time.time()
     getDailyWeather(inputFile, years, months, days, outFile)
     end = time.time()
