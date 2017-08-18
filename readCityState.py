@@ -92,7 +92,7 @@ def readcitySatesExecute():
     return stateCityMap, stateToCountyMap, countyToCityMap
 
 #get usa state name
-def getStateNames(inputXlsFile):
+def getStateNames():
     stateCityMap, stateToCountyMap, countyToCityMap = readcitySatesExecute()
     return stateCityMap.keys()
 

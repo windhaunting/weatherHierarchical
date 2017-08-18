@@ -98,7 +98,7 @@ def main():
         
     inputFile = "../../USAdlyFileDir"  
     
-    state = getStateNames()[0]                            #'ma', 'ct', etc.
+    state = list(getStateNames())[0]                            #'ma', 'ct', etc.
     print("state name: ", state)
     
     outFile =  "../output/outFileStationWeather.tsv" + state.upper()
