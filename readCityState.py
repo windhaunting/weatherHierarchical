@@ -104,9 +104,9 @@ def getOneStateStationCodeId(inputUSAStationFile, state):
     
     #df.apply(numpy.sum, axis=1) # equiv to df.sum(1)
     df['state'] = df['stateName'].apply(lambda x: x.split(',')[0].strip() == state)
-    stateStationCodeId = df[df['state'] == True]['stationId']                 #series type
-    print ("df: ",len(df), len(stateStationCodeId), type(stateStationCodeId))
-    return stateStationCodeId
+    stateStationCodeIdSeries = df[df['state'] == True]['stationId']                 #series type
+    print ("df: ",len(df), len(stateStationCodeIdSeries), type(stateStationCodeIdSeries))
+    return stateStationCodeIdSeries
 
 
 def main():

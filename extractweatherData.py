@@ -16,6 +16,7 @@ import time
 from commons import writeListRowToFileWriterTsv
 
 from ghcndextractor import ghcndextractor
+from readCityState import getOneStateStationCodeId
 
 #set global filters (we will not filter by year)
 stationIDCodesUSALst = []
@@ -31,7 +32,7 @@ def readUSAStation(inputFile):
     
 
 #get the daily data of days in months, years
-def getDailyWeather(inputFile, years, months, days, outFile):
+def getDailyWeather(inputFile, years, months, days, stationIDCodesLst, outFile):
     #ghcndextractor.countries = ["US"]
     #ghcndextractor.states = ["NJ"]     
     
@@ -44,8 +45,8 @@ def getDailyWeather(inputFile, years, months, days, outFile):
     #print ("dayCSV: ", type(dayCSV))
     #dayDictList01= ghcndextractor.getDailyData(["12"], ["25"], ["USW00014780"])
     #print ("dayDictList1: ", dayDictList01)
-    ghcndextractor.readStationsFileSelectStation(stationIDCodesUSALst)
-    ghcndextractor.readDailyFilesSelectStation(stationIDCodesUSALst)
+    ghcndextractor.readStationsFileSelectStation(stationIDCodesLst)
+    ghcndextractor.readDailyFilesSelectStation(stationIDCodesLst)
     dayDictList= ghcndextractor.getDailyUSDataYears(["2001"], ["12"], ["25"], ["USW00014780"])
     #dayDictList= ghcndextractor.getDailyUSDataYears(["1988"], ["12"], ["25"], ["USW00014780"])
     
@@ -82,9 +83,11 @@ def main():
     inputFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData"   
     outFile =  "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outFile01"
     os.remove(outFile) if os.path.exists(outFile) else None
-    getOneStateStationCodeId()
+    state = 'ma'
+    stationIDCodesSeries = getOneStateStationCodeId(outfileUSAStationId, state)
+    
     start = time.time()
-    getDailyWeather(inputFile, years, months, days, outFile)
+    getDailyWeather(inputFile, years, months, days, stationIDCodesSeries.tolist(), outFile)
     end = time.time()
     print("time elpased for getDailyWeather: ", end - start)
 
