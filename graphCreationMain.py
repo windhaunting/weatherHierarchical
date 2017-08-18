@@ -55,8 +55,9 @@ class graphCreationClass:
                     graphCreationClass.startNodeId += 1
                 #get edge list for each pair
                 edgeProp = 'lower'                          #lower hierarchical relation
-                graphCreationClass.edgeList.append([state, county, edgeProp])
-                graphCreationClass.edgeList.append([state, county, edgeProp])
+                graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[state], graphCreationClass.graphNodeNameToIdMap[county], edgeProp])
+                edgeProp = 'higher'
+                graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[county], graphCreationClass.graphNodeNameToIdMap[state], edgeProp])
             
         #get county and city edge list
         for county, cities in countyToCityMap.items():
@@ -81,9 +82,11 @@ class graphCreationClass:
                     graphCreationClass.startNodeId += 1
                 #get edge list for each pair
                 edgeProp = 'lower'             #lower hierarchical relation
-                graphCreationClass.edgeList.append([state, city, edgeProp])
+                graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[county], graphCreationClass.graphNodeNameToIdMap[city], edgeProp])
+                edgeProp = 'higher'
+                graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[city], graphCreationClass.graphNodeNameToIdMap[county], edgeProp])
     
-
+                
     #read the output of extrated daily weather (getDailyWeather) into edge list
     #'stationID','year','month','day','tmax','tmin','snwd','acmm', 'acss','prcp','snow'])
     def readstationWeatherOutput(self, inUSAStationFile, inFileStationWeather):
@@ -95,18 +98,25 @@ class graphCreationClass:
         print ("stationTemp: ", df['stationTemp'])
         
         for tple in df['stationTemp']:
-            stationTown = stationIDCodesUSAToNameMap[tple[0]].split(',')[1]      #state,city
-            print ("stationTown: ", stationTown, type(tple), type(tple[1]))
-
+            stationCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].strip()     #state,city
+            print ("stationCity: ", stationCity, type(tple), type(tple[1]))
+            
             if tple[1] is not None:
                 tmperature = str(tple[2]) + "--" + str(tple[1])
-            if tmperature not in graphCreationClass.graphNodeNameToIdMap:
-                graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
-                if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
-                    graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
-                graphCreationClass.startNodeId += 1
-               
-               
+                if tmperature not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
+                    if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
+                    graphCreationClass.startNodeId += 1
+                    
+                 #edge for town/city to temperature
+                 #cityNodeId = graphCreationClass.graphNodeNameToIdMap[stationCity]
+                edgeProp = 'same'             #lower hierarchical relation
+                graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[stationCity], graphCreationClass.graphNodeNameToIdMap[tmperature], edgeProp])             
+                graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[tmperature], graphCreationClass.graphNodeNameToIdMap[stationCity], edgeProp])             
+             
+        #get precipitation
+        
 def main():
     
     gcObj = graphCreationClass()
