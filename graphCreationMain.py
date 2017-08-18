@@ -45,7 +45,7 @@ class graphCreationClass:
                 graphCreationClass.startNodeId += 1
                 
             #store county and id mapping
-            for county in counties:
+            for county in set(counties):
                 if county not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[county] = graphCreationClass.startNodeId
                     #node type map
@@ -72,7 +72,7 @@ class graphCreationClass:
 
                 graphCreationClass.startNodeId += 1
             #store city and id mapping
-            for city in cities:
+            for city in set(cities):
                 if city not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[city] = graphCreationClass.startNodeId
                     #node type map
@@ -97,7 +97,7 @@ class graphCreationClass:
         df['stationTemp'] = list(zip(df["stationID"], df["tmax"], df["tmin"]))        #station temperature
         print ("stationTemp: ", df['stationTemp'])
         
-        for tple in df['stationTemp']:
+        for tple in df['stationTemp'].unique():
             stationCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip()     #state,city
             print ("stationCity: ", stationCity, type(tple), type(tple[1]))
             
@@ -118,7 +118,10 @@ class graphCreationClass:
                  
         #get precipitation
         df['stationPrcp'] = list(zip(df["stationID"], df["prcp"]))        #station temperature
-
+        for tple in df['stationTemp']:
+            stationCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip()     #state,city
+            
+            
 def main():
     
     gcObj = graphCreationClass()
