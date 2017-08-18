@@ -12,7 +12,7 @@ import os
 import pandas as pd
 from ghcndextractor import ghcndextractor
 from commons import writeListRowToFileWriterTsv
-from shutil import copyfile
+from shutil import copy2
 
 
 #read usa city and state from a file
@@ -111,12 +111,14 @@ def getOneStateStationCodeId(inputUSAStationFile, state):
     return stateStationCodeIdSeries
 
 
-def getUSAStationDlyFiles():
-    usadir = "../../USAdlyFileDir"
-    fileList = os.listdir(usadir)       #get
-    for file in fileList:
-        if file.split('.')[0] in 
-        copyfile()
+def getUSAStationDlyFiles(outfileUSAStationId, allgncFolder):
+    usadir = "../../USAdlyFileDir/"
+    fileList = os.listdir(allgncFolder)       #get
+    print("getUSAStationDlyFiles enter: " , len(fileList))
+    for fileName in fileList:
+        if fileName[0:11] in outfileUSAStationId:
+            filePath = os.path.join(allgncFolder, fileName)
+            copy2(filePath, usadir)
 
     
 def main():
@@ -124,8 +126,9 @@ def main():
 
     #test
     outfileUSAStationId = "../output/outfileUSAStationId"
-    getOneStateStationCodeId(outfileUSAStationId, 'ma')
-    
+    #getOneStateStationCodeId(outfileUSAStationId, 'ma')
+    allgncFolder = "../../ghcnd_all/"
+    getUSAStationDlyFiles(outfileUSAStationId, allgncFolder)
     
 if __name__== "__main__":
   main()
