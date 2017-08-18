@@ -39,12 +39,13 @@ def getDailyWeather(inputFile, years, months, days, outFile):
     
     ghcndextractor.readStationsFile()
     #print ("stations: ", ghcndextractor.stationIDCodesMap)
-    ghcndextractor.readDailyFiles()
+    #ghcndextractor.readDailyFiles()
     #dayCSV = ghcndextractor.getDailyDataCSV(["12"], ["25"], ["USW00014780"])
     #print ("dayCSV: ", type(dayCSV))
     #dayDictList01= ghcndextractor.getDailyData(["12"], ["25"], ["USW00014780"])
     #print ("dayDictList1: ", dayDictList01)
         
+    ghcndextractor.readDailyFilesSelectStation(stationIDCodesUSALst)
     dayDictList= ghcndextractor.getDailyUSDataYears(["2001"], ["12"], ["25"], ["USW00014780"])
     #dayDictList= ghcndextractor.getDailyUSDataYears(["1988"], ["12"], ["25"], ["USW00014780"])
     

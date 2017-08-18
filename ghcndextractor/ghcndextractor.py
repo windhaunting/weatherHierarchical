@@ -594,7 +594,7 @@ def readDailyFilesSelectStation(selectStationIDCodes):
     #Count the files to provide feedback
     fileCount = 0
     for fileName in fileList:
-        if (fileName[0:11] in stationIDCodes):
+        if (fileName[0:11] in selectStationIDCodes):
             filePath = os.path.join(dataLocation, fileName)
             if re.search( '.dly', fileName) is not None:
                 fileCount = fileCount + 1
@@ -603,7 +603,7 @@ def readDailyFilesSelectStation(selectStationIDCodes):
                
     for fileName in fileList:
         #Graph.logQ.put( [logType , logLevel.DEBUG , method , 'Examining %s' % package])
-        if (fileName[0:11] in stationIDCodes):
+        if (fileName[0:11] in selectStationIDCodes):
             filePath = os.path.join(dataLocation, fileName)
             if re.search( '.dly', fileName) is not None:
                 readLoc = codecs.open(filePath, "r", "utf-8")
