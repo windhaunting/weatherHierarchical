@@ -33,6 +33,20 @@ def readUSAStation(inputFile):
     
     return stationIDCodesUSALst
 
+#stationIdtoNameMap
+def readUSAStationIdToNameMap(inputFile):
+    stationIDCodesUSAToNameMap = {}
+    with codecs.open(inputFile, 'rU') as csvfile:
+         tsvin = csv.reader(csvfile, delimiter='\t')
+         for row in tsvin:
+             #print ("stationCodeId: ", stationCodeId)
+             stationCodeId = row[0].strip()
+             stationName = row[1].strip().lower()
+             if stationCodeId not in stationIDCodesUSAToNameMap:
+                 stationIDCodesUSAToNameMap[stationCodeId] = stationName
+             
+    return stationIDCodesUSAToNameMap
+
 #get the daily data of days in months, years
 def getDailyWeather(inputFile, years, months, days, stationIDCodesLst, outFile):
     #ghcndextractor.countries = ["US"]

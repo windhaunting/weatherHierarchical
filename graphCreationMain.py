@@ -8,6 +8,7 @@ Created on Tue Aug 15 12:49:10 2017
 
 #main function for creation graph data
 from readCityState import readcitySatesExecute
+from extractweatherData import readUSAStationIdToNameMap
 from blist import blist
 import pandas as pd
 
@@ -85,9 +86,12 @@ class graphCreationClass:
 
     #read the output of extrated daily weather (getDailyWeather) into edge list
     #'stationID','year','month','day','tmax','tmin','snwd','acmm', 'acss','prcp','snow'])
-    def readstationWeatherOutput(self, inputFile):
-        df = pd.read_csv(inputFile, delimiter = "\t")
-        
+    def readstationWeatherOutput(self, inUSAStationFile, inFileStationWeather):
+        stationIDCodesUSAToNameMap = readUSAStationIdToNameMap(inUSAStationFile)
+
+        df = pd.read_csv(inFileStationWeather, delimiter = "\t")
+        #create edge list between city/town and weather
+        df['new_col'] = list(zip(df["stationID"], df["tmax"], df["tmin"]))
 
 
 def main():
@@ -96,7 +100,8 @@ def main():
     gcObj.createNodeIdPlaces()    
     print ('len graphCreationClass edgelist: ', len(graphCreationClass.edgeList))
     
-    inputFileStationWeather = "../output/outFileStationWeather"
+    inFileStationWeather = "../output/outFileStationWeather"
+    outfileUSAStationId = "../output/outfileUSAStationId"
     gcObj.readstationWeatherOutput()
     
 if __name__== "__main__":
