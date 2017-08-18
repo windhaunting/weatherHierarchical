@@ -90,15 +90,26 @@ def readcitySatesExecute():
 
     return stateCityMap, stateToCountyMap, countyToCityMap
 
+#get all usa stationID and write into file
 def getUSAStationExecute():
     stateCityMap, stateToCountyMap, countyToCityMap = readcitySatesExecute()
     outfileUSAStationId = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outfileUSAStationId"
     
     getUSACodeId(stateCityMap, outfileUSAStationId)
 
+
+#get USA state's stationId code
+def getOneStateStationCodeId(inputUSAStationFile, state):
+    df = pd.read_csv(inputUSAStationFile)
+    print ("df: ",df)
+
 def main():
-    readcitySatesExecute()
+    #readcitySatesExecute()
 
-
+    #test
+    outfileUSAStationId = "../output/outfileUSAStationId"
+    getOneStateStationCodeId(outfileUSAStationId, 'ma')
+    
+    
 if __name__== "__main__":
   main()

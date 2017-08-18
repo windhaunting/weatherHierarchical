@@ -506,6 +506,63 @@ def readStationsFile():
     return stationNameToIDCodesMap
 
 
+#selection station to read:
+def readStationsFileSelectStation(selectStationIDCodes):
+    """
+        countries is a list of strings, containing the ISO codes of the desired countries in the extraction.  The first two characters of a station row
+            in ghcnd-stations.txt contain the country code.  Leaving this list empty sets no filtering (all countries)
+            
+        states is a list of states (or provinces) within the countries list.  This comes at positions 38 and 39 in the ghcnd-stations.txt record.  If there
+            is a state filter and if that state abbreviation shows up in a valid country, the record will be read.  It is not required to bind specific states
+            to specific countries.
+            E.g. if countries = ["US", "CA"] and states = ["ON", "OH"], then stations in the US state of Ohio and the neighboring Canadian Province of Ontario 
+            will be read.
+    """
+    global stationlist
+    global ghcnFolder
+    global countries
+    global states
+    
+    if ghcnFolder is None:
+        errorMessage = "Undefined  location for ghcn dataset.  Please add it's location"
+        raise undefinedGHCNDatasetLocation(errorMessage)
+    
+    #filePath = os.path.realpath(__file__)
+    #selfDir = os.path.dirname(filePath)
+    #dataLocation = os.path.join(selfDir, "ghcnd_all", "ghcnd-stations.txt")
+    dataLocation = os.path.join(ghcnFolder, "ghcnd_all", "ghcnd-stations.txt")
+    readLoc = codecs.open(dataLocation, "r", "utf-8")
+    allLines = readLoc.readlines()
+    readLoc.close
+    
+    print("%s Stations to be loaded" %len(allLines))
+    
+    for eachReadLine in allLines:
+        #the stationmonth metadata
+        countryCode = eachReadLine[0:2].strip()
+        stationID = eachReadLine[0:11].strip()
+        if stationID not in selectStationIDCodes:
+            continue
+        latitude= decimal.Decimal(eachReadLine[13:20].strip())
+        longitude = decimal.Decimal(eachReadLine[22:30].strip())
+        elevationStr= eachReadLine[32:37]
+        state = eachReadLine[38:41].strip()
+        name = eachReadLine[41:71].strip()
+        
+        if ((not countries) or (countryCode in countries)):
+            if ((not states) or (state in states)):
+                newStation = Station(stationID, latitude, longitude, countryCode, name, elevationStr, state)
+                stationlist.append(newStation)
+                stationIDCodes.append(stationID)
+                #cityName = ' '.join(name.split(' ')[:-2])
+                stationName = (state + ","+ name).lower()
+                #if stationID not in stationIDCodesToNameMap:
+                #    stationIDCodesToNameMap[stationID] = stationName
+                if stationName not in stationNameToIDCodesMap:
+                    stationNameToIDCodesMap[stationName] = stationID
+    return stationNameToIDCodesMap
+
+
 def readRow(lineOfData):
     global measurements
     global stationlist
