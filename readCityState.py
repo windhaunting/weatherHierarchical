@@ -111,12 +111,14 @@ def getOneStateStationCodeId(inputUSAStationFile, state):
     return stateStationCodeIdSeries
 
 
-def getUSAStationDlyFiles(outfileUSAStationId, allgncFolder):
+def getUSAStationDlyFiles(outfileUSAStationIdFile, allgncFolder):
+    df = pd.read_csv(outfileUSAStationIdFile,  names = ["stationId", "stateName"], delimiter = '\t')
+
     usadir = "../../USAdlyFileDir/"
     fileList = os.listdir(allgncFolder)       #get
     print("getUSAStationDlyFiles enter: " , len(fileList))
     for fileName in fileList:
-        if fileName[0:11] in outfileUSAStationId:
+        if fileName[0:11] in df["stationId"].tolist():
             filePath = os.path.join(allgncFolder, fileName)
             copy2(filePath, usadir)
 
@@ -125,10 +127,10 @@ def main():
     #getUSAStationExecute()
 
     #test
-    outfileUSAStationId = "../output/outfileUSAStationId"
+    outfileUSAStationIdFile = "../output/outfileUSAStationId"
     #getOneStateStationCodeId(outfileUSAStationId, 'ma')
     allgncFolder = "../../ghcnd_all/"
-    getUSAStationDlyFiles(outfileUSAStationId, allgncFolder)
+    getUSAStationDlyFiles(outfileUSAStationIdFile, allgncFolder)
     
 if __name__== "__main__":
   main()
