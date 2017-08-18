@@ -41,7 +41,7 @@ def readcityStateExl(inputXlsFile):
     
     for i, state in enumerate(stateLst):
         city = str(cityLst[i])
-        ele = (str(state) + "," + str(city)).lower()
+        ele = str(state)                 # + "," + str(city)).lower()
         if ele not in stateCityMap:
             stateCityMap[ele] = 1
         
@@ -73,7 +73,7 @@ def getUSACodeId(stateCityMap, outFile):
         for k in stateCityMap.keys():
             for stName, stcodeId in stationNameToIDCodesMap.items():
                 #print ("k: ", k, stName)
-                if k in stName:
+                if k in stName.split(",")[0]:
                     USAStationLst.append([stcodeId, k])
         
         #print ("USAStationLst: ", len(USAStationLst))
@@ -94,8 +94,10 @@ def readcitySatesExecute():
 #get usa state name
 def getStateNames():
     stateCityMap, stateToCountyMap, countyToCityMap = readcitySatesExecute()
-    return stateCityMap.keys()
-
+    states = []
+    for st in stateCityMap.keys():
+        states.append(st.split(",")[0])
+    return states
 
 #get all usa stationID and write into file
 def getUSAStationExecute():

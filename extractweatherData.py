@@ -101,7 +101,7 @@ def main():
     state = list(getStateNames())[0]                            #'ma', 'ct', etc.
     print("state name: ", state)
     
-    outFile =  "../output/outFileStationWeather.tsv" + state.upper()
+    outFile =  "../output/outFileStationWeather" + str(years[0]) + "-" + str(years[-1]) + state.upper() + ".tsv"
     os.remove(outFile) if os.path.exists(outFile) else None
     stationIDCodesSeries = getOneStateStationCodeId(outfileUSAStationId, state.lower())
     
