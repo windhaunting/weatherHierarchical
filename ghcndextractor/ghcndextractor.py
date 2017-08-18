@@ -472,10 +472,8 @@ def readStationsFile():
         errorMessage = "Undefined  location for ghcn dataset.  Please add it's location"
         raise undefinedGHCNDatasetLocation(errorMessage)
     
-    #filePath = os.path.realpath(__file__)
-    #selfDir = os.path.dirname(filePath)
-    #dataLocation = os.path.join(selfDir, "ghcnd_all", "ghcnd-stations.txt")
-    dataLocation = os.path.join(ghcnFolder, "ghcnd_all", "ghcnd-stations.txt")
+    #dataLocation = os.path.join(ghcnFolder, "ghcnd_all", "ghcnd-stations.txt")
+    dataLocation = os.path.join(ghcnFolder, "ghcnd-stations.txt") 
     readLoc = codecs.open(dataLocation, "r", "utf-8")
     allLines = readLoc.readlines()
     readLoc.close
@@ -527,10 +525,8 @@ def readStationsFileSelectStation(selectStationIDCodes):
         errorMessage = "Undefined  location for ghcn dataset.  Please add it's location"
         raise undefinedGHCNDatasetLocation(errorMessage)
     
-    #filePath = os.path.realpath(__file__)
-    #selfDir = os.path.dirname(filePath)
-    #dataLocation = os.path.join(selfDir, "ghcnd_all", "ghcnd-stations.txt")
-    dataLocation = os.path.join(ghcnFolder, "ghcnd_all", "ghcnd-stations.txt")
+    #dataLocation = os.path.join(ghcnFolder, "ghcnd_all", "ghcnd-stations.txt")
+    dataLocation = os.path.join(ghcnFolder, "ghcnd-stations.txt")
     readLoc = codecs.open(dataLocation, "r", "utf-8")
     allLines = readLoc.readlines()
     readLoc.close
@@ -607,7 +603,9 @@ def readDailyFiles():
     global states
    
     #Go through the condition repository directory and load the files up
-    dataLocation = os.path.join(ghcnFolder, "ghcnd_all")
+    #dataLocation = os.path.join(ghcnFolder, "ghcnd_all")
+    dataLocation = ghcnFolder
+
     fileList = os.listdir(dataLocation)
     
     #Count the files to provide feedback
@@ -645,7 +643,8 @@ def readDailyFilesSelectStation(selectStationIDCodes):
     global states
    
     #Go through the condition repository directory and load the files up
-    dataLocation = os.path.join(ghcnFolder, "ghcnd_all")
+    #dataLocation = os.path.join(ghcnFolder, "ghcnd_all")
+    dataLocation = ghcnFolder           #
     fileList = os.listdir(dataLocation)
     
     #Count the files to provide feedback

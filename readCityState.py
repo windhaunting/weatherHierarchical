@@ -118,7 +118,7 @@ def getUSAStationDlyFiles(outfileUSAStationIdFile, allgncFolder):
     fileList = os.listdir(allgncFolder)       #get
     print("getUSAStationDlyFiles enter: " , len(fileList))
     for fileName in fileList:
-        if fileName[0:11] in df["stationId"].tolist():
+        if fileName[0:11] in df["stationId"].unqiue():
             filePath = os.path.join(allgncFolder, fileName)
             copy2(filePath, usadir)
 
