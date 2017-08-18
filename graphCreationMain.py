@@ -98,7 +98,7 @@ class graphCreationClass:
         print ("stationTemp: ", df['stationTemp'])
         
         for tple in df['stationTemp']:
-            stationCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].strip()     #state,city
+            stationCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip()     #state,city
             print ("stationCity: ", stationCity, type(tple), type(tple[1]))
             
             if tple[1] is not None:
@@ -111,12 +111,14 @@ class graphCreationClass:
                     
                  #edge for town/city to temperature
                  #cityNodeId = graphCreationClass.graphNodeNameToIdMap[stationCity]
-                edgeProp = 'same'             #lower hierarchical relation
-                graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[stationCity], graphCreationClass.graphNodeNameToIdMap[tmperature], edgeProp])             
-                graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[tmperature], graphCreationClass.graphNodeNameToIdMap[stationCity], edgeProp])             
-             
+                if stationCity in graphCreationClass.graphNodeNameToIdMap:
+                    edgeProp = 'same'             #lower hierarchical relation
+                    graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[stationCity], graphCreationClass.graphNodeNameToIdMap[tmperature], edgeProp])             
+                    graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[tmperature], graphCreationClass.graphNodeNameToIdMap[stationCity], edgeProp])             
+                 
         #get precipitation
-        
+        df['stationPrcp'] = list(zip(df["stationID"], df["prcp"]))        #station temperature
+
 def main():
     
     gcObj = graphCreationClass()
