@@ -95,12 +95,17 @@ class graphCreationClass:
         print ("stationTemp: ", df['stationTemp'])
         
         for tple in df['stationTemp']:
-            stationTown = stationIDCodesUSAToNameMap[tple[0]].split('.')[1]
-            print ("stationTown: ", type(tple), type(tple[1]))
+            stationTown = stationIDCodesUSAToNameMap[tple[0]].split(',')[1]      #state,city
+            print ("stationTown: ", stationTown, type(tple), type(tple[1]))
 
             if tple[1] is not None:
                 tmperature = str(tple[2]) + "--" + str(tple[1])
-            if county not in graphCreationClass.graphNodeNameToIdMap:
+            if tmperature not in graphCreationClass.graphNodeNameToIdMap:
+                graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
+                if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                    graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
+                graphCreationClass.startNodeId += 1
+               
                
 def main():
     
