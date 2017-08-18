@@ -85,9 +85,9 @@ def getUSACodeId(stateCityMap, outFile):
 #main entry
 def readcitySatesExecute():
     
-    ghcndextractor.ghcnFolder = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/" 
+    ghcndextractor.ghcnFolder = "../../ghcnd_all/" 
     
-    inputXlsFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/List-of-Cities-States-and-Counties.xlsx"
+    inputXlsFile = "../../List-of-Cities-States-and-Counties.xlsx"
     stateCityMap, stateToCountyMap, countyToCityMap = readcityStateExl(inputXlsFile)
 
     return stateCityMap, stateToCountyMap, countyToCityMap

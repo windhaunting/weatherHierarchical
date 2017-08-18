@@ -82,8 +82,8 @@ def main():
     for i in range(1, 32):
         days.append(str(i))
         
-    inputFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/USAdlyFileDir"   
-    outFile =  "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outFile01"
+    inputFile = "../../USAdlyFileDir"   
+    outFile =  "../output/outFile01"
     os.remove(outFile) if os.path.exists(outFile) else None
     #state = 'ma'
     #stationIDCodesSeries = getOneStateStationCodeId(outfileUSAStationId, state)
