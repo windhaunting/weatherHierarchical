@@ -99,12 +99,12 @@ def main():
     inputFile = "../../USAdlyFileDir"   
     outFile =  "../output/outFileStationWeather.tsv"
     os.remove(outFile) if os.path.exists(outFile) else None
-    state = 'ma'
-    stationIDCodesSeries = getOneStateStationCodeId(outfileUSAStationId, state)
+    #state = 'ma'
+    #stationIDCodesSeries = getOneStateStationCodeId(outfileUSAStationId, state)
     
     start = time.time()
-    getDailyWeather(inputFile, years, months, days, stationIDCodesSeries.tolist(), outFile)
-    #getDailyWeather(inputFile, years, months, days, stationIDCodesUSALst, outFile)
+    #getDailyWeather(inputFile, years, months, days, stationIDCodesSeries.tolist(), outFile)
+    getDailyWeather(inputFile, years, months, days, stationIDCodesUSALst, outFile)
     end = time.time()
     print("time elpased for getDailyWeather: ", end - start)
 

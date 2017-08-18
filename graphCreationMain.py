@@ -91,16 +91,24 @@ class graphCreationClass:
 
         df = pd.read_csv(inFileStationWeather, delimiter = "\t")
         #create edge list between city/town and weather
-        df['new_col'] = list(zip(df["stationID"], df["tmax"], df["tmin"]))
-        print ("new col: ", df['new_col'])
+        df['stationTemp'] = list(zip(df["stationID"], df["tmax"], df["tmin"]))        #station temperature
+        print ("stationTemp: ", df['stationTemp'])
+        
+        for tple in df['stationTemp']:
+            stationTown = stationIDCodesUSAToNameMap[tple[0]].split('.')[1]
+            print ("stationTown: ", type(tple), type(tple[1]))
 
+            if tple[1] is not None:
+                tmperature = str(tple[2]) + "--" + str(tple[1])
+            if county not in graphCreationClass.graphNodeNameToIdMap:
+               
 def main():
     
     gcObj = graphCreationClass()
     #gcObj.createNodeIdPlaces()    
     print ('len graphCreationClass edgelist: ', len(graphCreationClass.edgeList))
     
-    inFileStationWeather = "../output/outFileStationWeather"
+    inFileStationWeather = "../output/outFileStationWeather2000-2011MA.tsv"
     outfileUSAStationId = "../output/outfileUSAStationId"
     gcObj.readstationWeatherOutput(outfileUSAStationId, inFileStationWeather)
     
