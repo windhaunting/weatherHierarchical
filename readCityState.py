@@ -100,11 +100,14 @@ def getUSAStationExecute():
 
 #get USA state's stationId code
 def getOneStateStationCodeId(inputUSAStationFile, state):
-    df = pd.read_csv(inputUSAStationFile)
+    df = pd.read_csv(inputUSAStationFile, header=None)
+    
     print ("df: ",df)
+    df.apply(numpy.sum, axis=1) # equiv to df.sum(1)
+
 
 def main():
-    #readcitySatesExecute()
+    readcitySatesExecute()
 
     #test
     outfileUSAStationId = "../output/outfileUSAStationId"
