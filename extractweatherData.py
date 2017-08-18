@@ -58,7 +58,7 @@ def getDailyWeather(inputFile, years, months, days, stationIDCodesLst, outFile):
     #print ("dayDictList: ", type(dayDictList), dayDictList)
     fd = open(outFile,'a')
     for ele in dayDictList:
-        writeListRowToFileWriterTsv(fd, [ele], '\t')
+        writeListRowToFileWriterTsv(fd, ele, '\t')
 
 
 def main():
@@ -83,14 +83,14 @@ def main():
         days.append(str(i))
         
     inputFile = "../../USAdlyFileDir"   
-    outFile =  "../output/outFile01"
+    outFile =  "../output/outFileStationWeather.tsv"
     os.remove(outFile) if os.path.exists(outFile) else None
-    #state = 'ma'
-    #stationIDCodesSeries = getOneStateStationCodeId(outfileUSAStationId, state)
+    state = 'ma'
+    stationIDCodesSeries = getOneStateStationCodeId(outfileUSAStationId, state)
     
     start = time.time()
-    #getDailyWeather(inputFile, years, months, days, stationIDCodesSeries.tolist(), outFile)
-    getDailyWeather(inputFile, years, months, days, stationIDCodesUSALst, outFile)
+    getDailyWeather(inputFile, years, months, days, stationIDCodesSeries.tolist(), outFile)
+    #getDailyWeather(inputFile, years, months, days, stationIDCodesUSALst, outFile)
     end = time.time()
     print("time elpased for getDailyWeather: ", end - start)
 

@@ -96,6 +96,7 @@ def main():
     gcObj.createNodeIdPlaces()    
     print ('len graphCreationClass edgelist: ', len(graphCreationClass.edgeList))
     
+    inputFileStationWeather = "../output/outFileStationWeather"
     gcObj.readstationWeatherOutput()
     
 if __name__== "__main__":
