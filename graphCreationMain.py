@@ -92,17 +92,17 @@ class graphCreationClass:
         df = pd.read_csv(inFileStationWeather, delimiter = "\t")
         #create edge list between city/town and weather
         df['new_col'] = list(zip(df["stationID"], df["tmax"], df["tmin"]))
-
+        print ("new col: ", df['new_col'])
 
 def main():
     
     gcObj = graphCreationClass()
-    gcObj.createNodeIdPlaces()    
+    #gcObj.createNodeIdPlaces()    
     print ('len graphCreationClass edgelist: ', len(graphCreationClass.edgeList))
     
     inFileStationWeather = "../output/outFileStationWeather"
     outfileUSAStationId = "../output/outfileUSAStationId"
-    gcObj.readstationWeatherOutput()
+    gcObj.readstationWeatherOutput(outfileUSAStationId, inFileStationWeather)
     
 if __name__== "__main__":
   main()
