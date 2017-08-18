@@ -19,10 +19,11 @@ from ghcndextractor import ghcndextractor
 from readCityState import getOneStateStationCodeId
 
 #set global filters (we will not filter by year)
-stationIDCodesUSALst = []
+#stationIDCodesUSALst = []
 
 #read all the station code Id of USA
 def readUSAStation(inputFile):
+    stationIDCodesUSALst = []
     with codecs.open(inputFile, 'rU') as csvfile:
          tsvin = csv.reader(csvfile, delimiter='\t')
          for row in tsvin:
@@ -30,6 +31,7 @@ def readUSAStation(inputFile):
              stationCodeId = row[0].strip()
              stationIDCodesUSALst.append(stationCodeId)
     
+    return stationIDCodesUSALst
 
 #get the daily data of days in months, years
 def getDailyWeather(inputFile, years, months, days, stationIDCodesLst, outFile):
@@ -51,7 +53,7 @@ def getDailyWeather(inputFile, years, months, days, stationIDCodesLst, outFile):
     #ddayDictList= ghcndextractor.getDailyUSDataYears(["2001"], ["12"], ["25"], ["USW00014780"])
     #dayDictList= ghcndextractor.getDailyUSDataYears(["1988"], ["12"], ["25"], ["USW00014780"])
     
-    dayDictList= ghcndextractor.getDailyUSDataYears(years, months, days, stationIDCodesUSALst)
+    dayDictList= ghcndextractor.getDailyUSDataYears(years, months, days, stationIDCodesLst)
 
     #print ("dayDictList: ", type(dayDictList), dayDictList)
     fd = open(outFile,'a')
@@ -63,7 +65,7 @@ def main():
     
     #read USA stationCodeId
     outfileUSAStationId = "../output/outfileUSAStationId"
-    #readUSAStation(outfileUSAStationId)
+    stationIDCodesUSALst = readUSAStation(outfileUSAStationId)
     #print (" len stationIDCodesUSALst: ", len(stationIDCodesUSALst), stationIDCodesUSALst[0], stationIDCodesUSALst[1])
     #get daily weather of usa
     #generate years
@@ -83,11 +85,12 @@ def main():
     inputFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/USAdlyFileDir"   
     outFile =  "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outFile01"
     os.remove(outFile) if os.path.exists(outFile) else None
-    state = 'ma'
-    stationIDCodesSeries = getOneStateStationCodeId(outfileUSAStationId, state)
+    #state = 'ma'
+    #stationIDCodesSeries = getOneStateStationCodeId(outfileUSAStationId, state)
     
     start = time.time()
-    getDailyWeather(inputFile, years, months, days, stationIDCodesSeries.tolist(), outFile)
+    #getDailyWeather(inputFile, years, months, days, stationIDCodesSeries.tolist(), outFile)
+    getDailyWeather(inputFile, years, months, days, stationIDCodesUSALst, outFile)
     end = time.time()
     print("time elpased for getDailyWeather: ", end - start)
 
