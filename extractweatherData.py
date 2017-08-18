@@ -49,10 +49,10 @@ def getDailyWeather(inputFile, years, months, days, stationIDCodesLst, outFile):
     
     ghcndextractor.readStationsFileSelectStation(stationIDCodesLst)
     ghcndextractor.readDailyFilesSelectStation(stationIDCodesLst)
-    dayDictList= ghcndextractor.getDailyUSDataYears(["2001"], ["12"], ["25"], ["USW00014780"])
+    #ddayDictList= ghcndextractor.getDailyUSDataYears(["2001"], ["12"], ["25"], ["USW00014780"])
     #dayDictList= ghcndextractor.getDailyUSDataYears(["1988"], ["12"], ["25"], ["USW00014780"])
     
-    # dayDictList= ghcndextractor.getDailyUSDataYears(years, months, days, stationIDCodesUSALst)
+    dayDictList= ghcndextractor.getDailyUSDataYears(years, months, days, stationIDCodesUSALst)
 
     #print ("dayDictList: ", type(dayDictList), dayDictList)
     fd = open(outFile,'a')
@@ -60,26 +60,25 @@ def getDailyWeather(inputFile, years, months, days, stationIDCodesLst, outFile):
         writeListRowToFileWriterTsv(fd, [ele], '\t')
 
 
-
 def main():
     
     #read USA stationCodeId
     outfileUSAStationId = "../output/outfileUSAStationId"
-    readUSAStation(outfileUSAStationId)
-    print (" len stationIDCodesUSALst: ", len(stationIDCodesUSALst), stationIDCodesUSALst[0], stationIDCodesUSALst[1])
+    #readUSAStation(outfileUSAStationId)
+    #print (" len stationIDCodesUSALst: ", len(stationIDCodesUSALst), stationIDCodesUSALst[0], stationIDCodesUSALst[1])
     #get daily weather of usa
     #generate years
     years = []
-    for i in range(2010, 2011):
+    for i in range(2000, 2011):
         years.append(str(i))
     
     #generate month:
     months = []
-    for i in range(1, 2):
+    for i in range(1, 13):
         months.append(str(i))
     
     days = []
-    for i in range(1, 2):
+    for i in range(1, 32):
         days.append(str(i))
         
     inputFile = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData"   

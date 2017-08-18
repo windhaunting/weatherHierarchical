@@ -109,6 +109,11 @@ def getOneStateStationCodeId(inputUSAStationFile, state):
     return stateStationCodeIdSeries
 
 
+def getUSAStationDlyFiles():
+    usadir = "../../USAdlyFileDir"
+    fileList = os.listdir(dataLocation)
+
+    
 def main():
     #getUSAStationExecute()
 
