@@ -43,7 +43,7 @@ def readcityStateExl(inputXlsFile):
         city = str(cityLst[i])
         ele = str(state)                 # + "," + str(city)).lower()
         if ele not in stateCityMap:
-            stateCityMap[ele] = 1
+            stateCityMap[ele] = 1               #no need state to [city] map;
         
         county = str(countyLst[i])
         if state.lower() not in stateToCountyMap:

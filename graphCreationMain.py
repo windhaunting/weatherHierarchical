@@ -97,6 +97,7 @@ class graphCreationClass:
         df['stationTemp'] = list(zip(df["stationID"], df["tmax"], df["tmin"]))        #station temperature
         print ("stationTemp: ", df['stationTemp'])
         
+        #get temperature
         for tple in df['stationTemp'].unique():
             stationCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip()     #state,city
             print ("stationCity: ", stationCity, type(tple), type(tple[1]))
@@ -106,7 +107,7 @@ class graphCreationClass:
                 if tmperature not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
-                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
+                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.tempType
                     graphCreationClass.startNodeId += 1
                     
                  #edge for town/city to temperature
@@ -118,10 +119,43 @@ class graphCreationClass:
                  
         #get precipitation
         df['stationPrcp'] = list(zip(df["stationID"], df["prcp"]))        #station temperature
-        for tple in df['stationTemp']:
+        for tple in df['stationPrcp']:
             stationCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip()     #state,city
+            if tple[1] is not None:
+                prcp = str(tple[1])
+                if prcp not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[prcp] = graphCreationClass.startNodeId
+                    if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.prcpType
+                    graphCreationClass.startNodeId += 1
+        
+        #get snow type
+        df['stationsnwd'] = list(zip(df["stationID"], df["snwd"]))        #station temperature
+        for tple in df['stationsnwd']:
+            stationCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip()     #state,city
+            if tple[1] is not None:
+                prcp = str(tple[1])
+                if prcp not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[prcp] = graphCreationClass.startNodeId
+                    if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.snowType
+                    graphCreationClass.startNodeId += 1
+                    
+        #get time month/day/year
+        df['tempTime'] = list(zip(df["tmax"], df["tmin"],df["month"], df["day"], df["year"]))        #station temperature
+
+        for tple in df['stationTemp'].unique():
             
-            
+            if tple[1] is not None and tple[3] is not None:         #temp tmin and time day is not None
+                tmperature = str(tple[2]) + "--" + str(tple[1])
+                
+                if tmperature not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
+                    if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.tempType
+                    graphCreationClass.startNodeId += 1
+                    
+                    
 def main():
     
     gcObj = graphCreationClass()
