@@ -17,7 +17,7 @@ from commons import writeListRowToFileWriterTsv
 
 from ghcndextractor import ghcndextractor
 from readCityState import getOneStateStationCodeId
-
+from readCityState import getStateNames
 #set global filters (we will not filter by year)
 #stationIDCodesUSALst = []
 
@@ -79,7 +79,7 @@ def main():
     
     #read USA stationCodeId
     outfileUSAStationId = "../output/outfileUSAStationId"
-    stationIDCodesUSALst = readUSAStation(outfileUSAStationId)
+    #stationIDCodesUSALst = readUSAStation(outfileUSAStationId)
     #print (" len stationIDCodesUSALst: ", len(stationIDCodesUSALst), stationIDCodesUSALst[0], stationIDCodesUSALst[1])
     #get daily weather of usa
     #generate years
@@ -97,11 +97,13 @@ def main():
         days.append(str(i))
         
     inputFile = "../../USAdlyFileDir"  
-    state = 'ma'
-
+    
+    state = getStateNames()[0]                            #'ma', 'ct', etc.
+    print("state name: ", state)
+    
     outFile =  "../output/outFileStationWeather.tsv" + state.upper()
     os.remove(outFile) if os.path.exists(outFile) else None
-    stationIDCodesSeries = getOneStateStationCodeId(outfileUSAStationId, state)
+    stationIDCodesSeries = getOneStateStationCodeId(outfileUSAStationId, state.lower())
     
     start = time.time()
     getDailyWeather(inputFile, years, months, days, stationIDCodesSeries.tolist(), outFile)

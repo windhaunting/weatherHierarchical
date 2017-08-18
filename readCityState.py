@@ -61,6 +61,7 @@ def readcityStateExl(inputXlsFile):
 #get all usa's station id, and output to a file                ;
 def getUSACodeId(stateCityMap, outFile):
       #(stationIDCodesToNameMap[stationMonth.stationID] in stateCityMap) and
+        ghcndextractor.ghcnFolder = "../../ghcnd_all/" 
         stationNameToIDCodesMap = ghcndextractor.readStationsFile()
 
          
@@ -85,12 +86,16 @@ def getUSACodeId(stateCityMap, outFile):
 #main entry
 def readcitySatesExecute():
     
-    ghcndextractor.ghcnFolder = "../../ghcnd_all/" 
-    
     inputXlsFile = "../../List-of-Cities-States-and-Counties.xlsx"
     stateCityMap, stateToCountyMap, countyToCityMap = readcityStateExl(inputXlsFile)
 
     return stateCityMap, stateToCountyMap, countyToCityMap
+
+#get usa state name
+def getStateNames(inputXlsFile):
+    stateCityMap, stateToCountyMap, countyToCityMap = readcitySatesExecute()
+    return stateCityMap.keys()
+
 
 #get all usa stationID and write into file
 def getUSAStationExecute():
