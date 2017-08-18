@@ -63,7 +63,7 @@ def main():
     #read USA stationCodeId
     outfileUSAStationId = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outfileUSAStationId"
     readUSAStation(outfileUSAStationId)
-    print (" len stationIDCodesUSALst: ", len(stationIDCodesUSALst))
+    print (" len stationIDCodesUSALst: ", len(stationIDCodesUSALst), stationIDCodesUSALst[0], stationIDCodesUSALst[1])
     #get daily weather of usa
     #generate years
     years = []

@@ -8,7 +8,7 @@ Created on Thu Aug 10 23:57:31 2017
 
 #read us city and state file
 
-
+import os
 import pandas as pd
 from ghcndextractor import ghcndextractor
 from commons import writeListRowToFileWriterTsv
@@ -93,21 +93,21 @@ def readcitySatesExecute():
 #get all usa stationID and write into file
 def getUSAStationExecute():
     stateCityMap, stateToCountyMap, countyToCityMap = readcitySatesExecute()
-    outfileUSAStationId = "/home/fubao/workDir/ResearchProjects/GraphQuerySearchRelatedPractice/Data/weatherData/weatherParser/output/outfileUSAStationId"
-    
+    outfileUSAStationId = "../output/outfileUSAStationId"
+    os.remove(outfileUSAStationId) if os.path.exists(outfileUSAStationId) else None
     getUSACodeId(stateCityMap, outfileUSAStationId)
 
 
 #get USA state's stationId code
 def getOneStateStationCodeId(inputUSAStationFile, state):
-    df = pd.read_csv(inputUSAStationFile, header=None)
+    df = pd.read_csv(inputUSAStationFile,  names = ["stationId", "stateName"], delimiter = '\t')
     
     print ("df: ",df)
-    df.apply(numpy.sum, axis=1) # equiv to df.sum(1)
-
+    #df.apply(numpy.sum, axis=1) # equiv to df.sum(1)
+    df[df['stateName'].split(',')[0] in state]['stationId']
 
 def main():
-    readcitySatesExecute()
+    getUSAStationExecute()
 
     #test
     outfileUSAStationId = "../output/outfileUSAStationId"

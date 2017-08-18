@@ -535,7 +535,7 @@ def readStationsFileSelectStation(selectStationIDCodes):
     allLines = readLoc.readlines()
     readLoc.close
     
-    print("%s Stations to be loaded" %len(allLines))
+    print("readStationsFileSelectStation %s Stations to be loaded" %len(allLines))
     
     for eachReadLine in allLines:
         #the stationmonth metadata
@@ -656,7 +656,7 @@ def readDailyFilesSelectStation(selectStationIDCodes):
             if re.search( '.dly', fileName) is not None:
                 fileCount = fileCount + 1
             
-    print("Loading data from %s .dly files" %fileCount)
+    print("readDailyFilesSelectStation Loading data from %s .dly files" %fileCount)
                
     for fileName in fileList:
         #Graph.logQ.put( [logType , logLevel.DEBUG , method , 'Examining %s' % package])
