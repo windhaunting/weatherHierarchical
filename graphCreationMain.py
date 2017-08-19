@@ -100,7 +100,7 @@ class graphCreationClass:
         #get temperature
         for tple in df['stationTemp'].unique():
             stationCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip()     #state,city
-            print ("stationCity: ", stationCity, type(tple), type(tple[1]))
+            #print ("stationCity: ", stationCity, type(tple), type(tple[1]))
             
             if tple[1] is not None:
                 tmperature = str(tple[2]) + "--" + str(tple[1])
@@ -144,7 +144,7 @@ class graphCreationClass:
         #get time month/day/year
         df['tempTime'] = list(zip(df["tmax"], df["tmin"],df["month"], df["day"], df["year"]))        #station temperature
 
-        for tple in df['stationTemp'].unique():
+        for tple in df['tempTime'].unique():
             
             if tple[1] is not None and tple[3] is not None:         #temp tmin and time day is not None
                 tmperature = str(tple[2]) + "--" + str(tple[1])
