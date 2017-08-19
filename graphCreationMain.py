@@ -25,7 +25,7 @@ class graphCreationClass:
     gNodeIdToNameMap  = {}               #store node id -> name  map
     
     graNodeTypeMap = {}                 #node id to type
-    edgeList = blist()                       #graph edge list
+    edgeList = blist()                       #graph edge list  "nodeId, nodeId, edge"
     def __init__(self):
       pass
       
@@ -157,8 +157,13 @@ class graphCreationClass:
                     graphCreationClass.startNodeId += 1
                 if time not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
-
                     
+                    
+#write graphNodeNameToIdMap, graNodeTypeMap, and edgeList
+def writeIntoFile():
+    x = 1
+    
+    
 def main():
     
     gcObj = graphCreationClass()
