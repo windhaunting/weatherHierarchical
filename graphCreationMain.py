@@ -148,14 +148,16 @@ class graphCreationClass:
             
             if tple[1] is not None and tple[3] is not None:         #temp tmin and time day is not None
                 tmperature = str(tple[2]) + "--" + str(tple[1])
-                time = str(tple[2]) + "/" + str(tple[3]) + str(tple[4])
+                time = str(tple[2]) + "/" + str(tple[3]) + "/" + str(tple[4])
                 
                 if tmperature not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.tempType
                     graphCreationClass.startNodeId += 1
-                if time not in 
+                if time not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
+
                     
 def main():
     
