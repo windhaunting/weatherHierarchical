@@ -190,7 +190,8 @@ def main():
     gcObj.readstationWeatherOutput(outfileUSAStationId, inFileStationWeather)
     
     
-    outNodeTypeFile = "../
+    outNodeTypeFile = "../outNodeTypeFile"
+    
     gcObj.writeIntoFile()
     
 if __name__== "__main__":
