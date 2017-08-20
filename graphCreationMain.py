@@ -109,6 +109,8 @@ class graphCreationClass:
                 tmperature = str(tple[2]) + "--" + str(tple[1])
                 if tmperature not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
+                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = tmperature
+                    
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.tempType
                     graphCreationClass.startNodeId += 1
@@ -128,6 +130,8 @@ class graphCreationClass:
                 prcp = str(tple[1])
                 if prcp not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[prcp] = graphCreationClass.startNodeId
+                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = prcp
+                    
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.prcpType
                     graphCreationClass.startNodeId += 1
@@ -165,7 +169,7 @@ class graphCreationClass:
 #write graphNodeNameToIdMap, graNodeTypeMap, and edgeList
 def writeIntoFile(outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
     #write node type file
-    pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient="index")
+    df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient="index")
     df.to_csv(outNodeTypeFile)
 
 
