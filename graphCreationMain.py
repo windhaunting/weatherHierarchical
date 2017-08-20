@@ -170,7 +170,7 @@ class graphCreationClass:
 def writeIntoFile(outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
     #write node type file
     df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap)
-    df.to_csv(outNodeTypeFile)
+    df.to_csv(outNodeTypeFile, index=False)
     
     
 
@@ -190,9 +190,10 @@ def main():
     gcObj.readstationWeatherOutput(outfileUSAStationId, inFileStationWeather)
     
     
-    outNodeTypeFile = "../outNodeTypeFile"
-    
-    gcObj.writeIntoFile()
+    outNodeTypeFile = "../outNodeTypeFile.csv"
+    outNodeNameToIdFile = "../outNodeNameToIdFile.csv"
+    outEdgeListFile = "../outEdgeListFile.csv"
+    gcObj.writeIntoFile(outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile)
     
 if __name__== "__main__":
   main()
