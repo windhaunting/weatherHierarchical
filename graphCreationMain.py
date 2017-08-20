@@ -48,6 +48,7 @@ class graphCreationClass:
             for county in set(counties):
                 if county not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[county] = graphCreationClass.startNodeId
+                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = county
                     #node type map
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
@@ -75,6 +76,8 @@ class graphCreationClass:
             for city in set(cities):
                 if city not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[city] = graphCreationClass.startNodeId
+                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = city
+                    
                     #node type map
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
@@ -160,8 +163,15 @@ class graphCreationClass:
                     
                     
 #write graphNodeNameToIdMap, graNodeTypeMap, and edgeList
-def writeIntoFile():
-    x = 1
+def writeIntoFile(outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
+    #write node type file
+    pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient="index")
+    df.to_csv(outNodeTypeFile)
+
+
+    #write edge list
+    
+    
     
     
 def main():
