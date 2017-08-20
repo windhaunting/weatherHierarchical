@@ -98,7 +98,7 @@ class graphCreationClass:
         df = pd.read_csv(inFileStationWeather, delimiter = "\t")
         #create edge list between city/town and weather
         df['stationTemp'] = list(zip(df["stationID"], df["tmax"], df["tmin"]))        #station temperature
-        print ("stationTemp: ", df['stationTemp'])
+        #print ("stationTemp: ", df['stationTemp'])
         
         #get temperature
         for tple in df['stationTemp'].unique():
@@ -169,9 +169,10 @@ class graphCreationClass:
 #write graphNodeNameToIdMap, graNodeTypeMap, and edgeList
 def writeIntoFile(outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
     #write node type file
-    df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient="index")
+    df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap)
     df.to_csv(outNodeTypeFile)
-
+    
+    
 
     #write edge list
     
@@ -187,6 +188,10 @@ def main():
     inFileStationWeather = "../output/outFileStationWeather2000-2011MA.tsv"
     outfileUSAStationId = "../output/outfileUSAStationId"
     gcObj.readstationWeatherOutput(outfileUSAStationId, inFileStationWeather)
+    
+    
+    outNodeTypeFile = "../
+    gcObj.writeIntoFile()
     
 if __name__== "__main__":
   main()
