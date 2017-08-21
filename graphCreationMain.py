@@ -140,12 +140,14 @@ class graphCreationClass:
         
         #get snow type
         df['stationsnwd'] = list(zip(df["stationID"], df["snwd"]))        #station temperature
-        for tple in df['stationsnwd']:
+        print ("stationsnwd describe", df['stationsnwd'].describe())
+        for tple in df['stationsnwd'].unique():
             stationCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip()     #state,city
             if tple[1] is not None:
-                prcp = str(tple[1])
-                if prcp not in graphCreationClass.graphNodeNameToIdMap:
-                    graphCreationClass.graphNodeNameToIdMap[prcp] = graphCreationClass.startNodeId
+                snwd = str(tple[1])
+                print("previous eeeeeeeeeeeeeeeeee: ", nodeType.snowType, snwd)
+                if snwd not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[snwd] = graphCreationClass.startNodeId
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.snowType
                         print("eeeeeeeeeeeeeeeee: ", nodeType.snowType)
@@ -156,7 +158,6 @@ class graphCreationClass:
         df['tempTime'] = list(zip(df["tmax"], df["tmin"],df["month"], df["day"], df["year"]))        #station temperature
 
         for tple in df['tempTime'].unique():
-            
             if tple[1] is not None and tple[3] is not None:         #temp tmin and time day is not None
                 tmperature = str(tple[1]) + "--" + str(tple[0])
                 time = str(tple[2]) + "/" + str(tple[3]) + "/" + str(tple[4])
