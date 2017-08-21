@@ -199,11 +199,10 @@ class graphCreationClass:
         
         #get time month/day/year and prcp relations
         df['prcpTime'] = list(zip(df["prcp"], df["month"], df["day"], df["year"]))        #station temperature
-
         for tple in df['prcpTime'].unique():
             if tple[1] is not None and tple[3] is not None:         #temp tmin and time day is not None
-                nodeInfoPrcp = str(tple[0]) + "+" + str(nodeType.tempType)
-                nodeInfoTime = str(tple[1) + "/" + str(tple[2]) + "/" + str(tple[3]) + "+" + str(nodeType.timeType)
+                nodeInfoPrcp = str(tple[0]) + "+" + str(nodeType.prcpType)
+                nodeInfoTime = str(tple[1]) + "/" + str(tple[2]) + "/" + str(tple[3]) + "+" + str(nodeType.timeType)
                 
                 if nodeInfoTime not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[nodeInfoTime] = graphCreationClass.startNodeId
@@ -214,12 +213,14 @@ class graphCreationClass:
                     graphCreationClass.startNodeId += 1
                     
                 #edge for temp to time
-                if nodeInfoTmperature in graphCreationClass.graphNodeNameToIdMap:
+                if nodeInfoPrcp in graphCreationClass.graphNodeNameToIdMap:
                     edgeProp = 'same'                                        #lower hierarchical relation
-                    graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoTmperature], graphCreationClass.graphNodeNameToIdMap[nodeInfoTime], edgeProp])             
-                    graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoTime], graphCreationClass.graphNodeNameToIdMap[nodeInfoTmperature], edgeProp])             
+                    graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoPrcp], graphCreationClass.graphNodeNameToIdMap[nodeInfoTime], edgeProp])             
+                    graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoTime], graphCreationClass.graphNodeNameToIdMap[nodeInfoPrcp], edgeProp])             
 
-        
+        #get time month/day/year and snwd relations
+
+
     #write graphNodeNameToIdMap, graNodeTypeMap, and edgeList
     def writeIntoFile(self, outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
         #write node type file
