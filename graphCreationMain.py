@@ -35,10 +35,11 @@ class graphCreationClass:
         stateCityMap, stateToCountyMap, countyToCityMap = readcitySatesExecute()
         #get state and county edge list
         for state, counties in stateToCountyMap.items():
+            nodeInfo = state + "+" + str(nodeType.placeType)
             #store state and id mapping
-            if state not in graphCreationClass.graphNodeNameToIdMap:
-                graphCreationClass.graphNodeNameToIdMap[state] = graphCreationClass.startNodeId
-                graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = state
+            if nodeInfo not in graphCreationClass.graphNodeNameToIdMap:
+                graphCreationClass.graphNodeNameToIdMap[nodeInfo] = graphCreationClass.startNodeId
+                graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfo
                 #node type map
                 if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                     graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
@@ -47,9 +48,10 @@ class graphCreationClass:
                 
             #store county and id mapping
             for county in set(counties):
+                nodeInfo = county + "+" + str(nodeType.placeType) 
                 if county not in graphCreationClass.graphNodeNameToIdMap:
-                    graphCreationClass.graphNodeNameToIdMap[county] = graphCreationClass.startNodeId
-                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = county
+                    graphCreationClass.graphNodeNameToIdMap[nodeInfo] = graphCreationClass.startNodeId
+                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfo
                     #node type map
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.placeType
