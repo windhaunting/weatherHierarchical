@@ -181,19 +181,21 @@ class graphCreationClass:
 
         for tple in df['tempTime'].unique():
             if tple[1] is not None and tple[3] is not None:         #temp tmin and time day is not None
-                tmperature = str(tple[1]) + "--" + str(tple[0])
-                time = str(tple[2]) + "/" + str(tple[3]) + "/" + str(tple[4])
+                nodeInfoTmperature = "[" + str(tple[1]) + "," + str(tple[0]) + "]" + "+" + str(nodeType.tempType)
+                nodeInfoTime = str(tple[2]) + "/" + str(tple[3]) + "/" + str(tple[4]) + "+" + str(nodeType.timeType)
                 
-                if tmperature not in graphCreationClass.graphNodeNameToIdMap:
-                    graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
+                if nodeInfoTime not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[nodeInfoTime] = graphCreationClass.startNodeId
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
-                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.tempType
-                        print("fffffffffffffffffff: ", nodeType.tempType)
+                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.timeType
+                        print("fffffffffffffffffff: ", nodeType.timeType)
 
                     graphCreationClass.startNodeId += 1
-                if time not in graphCreationClass.graphNodeNameToIdMap:
-                    graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
-                    
+                
+                if nodeInfoTime not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[nodeInfoTime] = graphCreationClass.startNodeId
+                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoTime
+                
                     
     #write graphNodeNameToIdMap, graNodeTypeMap, and edgeList
     def writeIntoFile(self, outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
