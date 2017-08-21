@@ -22,7 +22,7 @@ class nodeType:
     
 class graphCreationClass:
     startNodeId = 1            #graph node Id starting from 1
-    graphNodeNameToIdMap  = {}            #store node name -> ID map
+    graphNodeNameToIdMap  = {}            #store node name+type -> ID map
     gNodeIdToNameMap  = {}               #store node id -> name  map
     
     graNodeTypeMap = {}                 #node id to type
@@ -49,7 +49,7 @@ class graphCreationClass:
             #store county and id mapping
             for county in set(counties):
                 nodeInfoCounty = county + "+" + str(nodeType.placeType) 
-                if county not in graphCreationClass.graphNodeNameToIdMap:
+                if nodeInfoCounty not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[nodeInfoCounty] = graphCreationClass.startNodeId
                     graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoCounty
                     #node type map
@@ -67,7 +67,7 @@ class graphCreationClass:
         for county, cities in countyToCityMap.items():
             #store state and id mapping
             nodeInfoCounty = county + "+" + str(nodeType.placeType) 
-            if county not in graphCreationClass.graphNodeNameToIdMap:
+            if nodeInfoCounty not in graphCreationClass.graphNodeNameToIdMap:
                 graphCreationClass.graphNodeNameToIdMap[nodeInfoCounty] = graphCreationClass.startNodeId
                 graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoCounty
                 #node type map
@@ -78,9 +78,9 @@ class graphCreationClass:
             #store city and id mapping
             for city in set(cities):
                 nodeInfoCity = city + "+" + str(nodeType.placeType) 
-                if city not in graphCreationClass.graphNodeNameToIdMap:
-                    graphCreationClass.graphNodeNameToIdMap[nodeInfoCounty] = graphCreationClass.startNodeId
-                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoCounty
+                if nodeInfoCity not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[nodeInfoCity] = graphCreationClass.startNodeId
+                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoCity
                     
                     #node type map
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
@@ -121,7 +121,6 @@ class graphCreationClass:
                  #edge for town/city to temperature
                  #cityNodeId = graphCreationClass.graphNodeNameToIdMap[stationCity]
                 if nodeInfoCity in graphCreationClass.graphNodeNameToIdMap:
-                    
                     edgeProp = 'same'             #lower hierarchical relation
                     graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoCity], graphCreationClass.graphNodeNameToIdMap[nodeInfoTmperature], edgeProp])             
                     graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoTmperature], graphCreationClass.graphNodeNameToIdMap[nodeInfoCity], edgeProp])             
@@ -142,7 +141,7 @@ class graphCreationClass:
                         #print("ddddddddddddddddddd: ", nodeType.prcpType)
                     graphCreationClass.startNodeId += 1
                     
-                #edge for town/city to temperature
+                #edge for town/city to prcp
                 #cityNodeId = graphCreationClass.graphNodeNameToIdMap[stationCity]
                 if nodeInfoCity in graphCreationClass.graphNodeNameToIdMap:
                     edgeProp = 'same'             #lower hierarchical relation
@@ -165,10 +164,9 @@ class graphCreationClass:
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.snowType
                         print("eeeeeeeeeeeeeeeee: ", nodeType.snowType)
-
                     graphCreationClass.startNodeId += 1
                 
-                #edge for town/city to temperature
+                #edge for town/city to snwd
                 #cityNodeId = graphCreationClass.graphNodeNameToIdMap[stationCity]
                 if nodeInfoCity in graphCreationClass.graphNodeNameToIdMap:
                     edgeProp = 'same'                                        #lower hierarchical relation
@@ -186,23 +184,27 @@ class graphCreationClass:
                 
                 if nodeInfoTime not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[nodeInfoTime] = graphCreationClass.startNodeId
+                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoTime
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.timeType
                         print("fffffffffffffffffff: ", nodeType.timeType)
-
                     graphCreationClass.startNodeId += 1
-                
-                if nodeInfoTime not in graphCreationClass.graphNodeNameToIdMap:
-                    graphCreationClass.graphNodeNameToIdMap[nodeInfoTime] = graphCreationClass.startNodeId
-                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoTime
-                
                     
+                #edge for temp to time
+                if nodeInfoTmperature in graphCreationClass.graphNodeNameToIdMap:
+                    edgeProp = 'same'                                        #lower hierarchical relation
+                    graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoTmperature], graphCreationClass.graphNodeNameToIdMap[nodeInfoTime], edgeProp])             
+                    graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoTime], graphCreationClass.graphNodeNameToIdMap[nodeInfoTmperature], edgeProp])             
+              
     #write graphNodeNameToIdMap, graNodeTypeMap, and edgeList
     def writeIntoFile(self, outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
         #write node type file
         df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient='index')
         df.to_csv(outNodeTypeFile, sep='\t')
         
+        #write into outNodeNameToIdFile
+        df = pd.DataFrame.from_dict(graphCreationClass.graphNodeNameToIdMap, orient='index')
+        df.to_csv(outNodeNameToIdFile, sep='\t')
         
     
         #write edge list
@@ -227,9 +229,9 @@ def main():
     
     #gcObj.testDictionaryWrite()
     
-    outNodeTypeFile = "../output/outNodeTypeFile.csv"
-    outNodeNameToIdFile = "../output/outNodeNameToIdFile.csv"
-    outEdgeListFile = "../output/outEdgeListFile.csv"
+    outNodeTypeFile = "../output/outNodeTypeFile.tsv"
+    outNodeNameToIdFile = "../output/outNodeNameToIdFile.tsv"
+    outEdgeListFile = "../output/outEdgeListFile.tsv"
     print ('len graphCreationClass edgelist after: ', len(graphCreationClass.edgeList), len(graphCreationClass.graNodeTypeMap))
     
     os.remove(outNodeTypeFile) if os.path.exists(outNodeTypeFile) else None
