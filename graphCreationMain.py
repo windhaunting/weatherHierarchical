@@ -166,16 +166,16 @@ class graphCreationClass:
                     graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
                     
                     
-#write graphNodeNameToIdMap, graNodeTypeMap, and edgeList
-def writeIntoFile(outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
-    #write node type file
-    df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap)
-    df.to_csv(outNodeTypeFile, index=False)
+    #write graphNodeNameToIdMap, graNodeTypeMap, and edgeList
+    def writeIntoFile(self, outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
+        #write node type file
+        df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap)
+        df.to_csv(outNodeTypeFile, index=False)
+        
+        
     
-    
-
-    #write edge list
-    
+        #write edge list
+        
     
     
     
