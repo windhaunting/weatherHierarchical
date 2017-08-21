@@ -121,7 +121,8 @@ class graphCreationClass:
                     edgeProp = 'same'             #lower hierarchical relation
                     graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[stationCity], graphCreationClass.graphNodeNameToIdMap[tmperature], edgeProp])             
                     graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[tmperature], graphCreationClass.graphNodeNameToIdMap[stationCity], edgeProp])             
-                 
+         
+        
         #get precipitation
         df['stationPrcp'] = list(zip(df["stationID"], df["prcp"]))        #station temperature
         for tple in df['stationPrcp']:
@@ -169,7 +170,7 @@ class graphCreationClass:
     #write graphNodeNameToIdMap, graNodeTypeMap, and edgeList
     def writeIntoFile(self, outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
         #write node type file
-        df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap)
+        df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient='index')
         df.to_csv(outNodeTypeFile, index=False)
         
         
@@ -182,17 +183,18 @@ class graphCreationClass:
 def main():
     
     gcObj = graphCreationClass()
-    #gcObj.createNodeIdPlaces()    
-    print ('len graphCreationClass edgelist: ', len(graphCreationClass.edgeList))
+    gcObj.createNodeIdPlaces()    
+    print ('len graphCreationClass edgelist before: ', len(graphCreationClass.edgeList))
     
     inFileStationWeather = "../output/outFileStationWeather2000-2011MA.tsv"
     outfileUSAStationId = "../output/outfileUSAStationId"
     gcObj.readstationWeatherOutput(outfileUSAStationId, inFileStationWeather)
     
     
-    outNodeTypeFile = "../outNodeTypeFile.csv"
-    outNodeNameToIdFile = "../outNodeNameToIdFile.csv"
-    outEdgeListFile = "../outEdgeListFile.csv"
+    outNodeTypeFile = "../output/outNodeTypeFile.csv"
+    outNodeNameToIdFile = "../output/outNodeNameToIdFile.csv"
+    outEdgeListFile = "../output/outEdgeListFile.csv"
+    print ('len graphCreationClass edgelist after: ', len(graphCreationClass.edgeList))
     gcObj.writeIntoFile(outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile)
     
 if __name__== "__main__":
