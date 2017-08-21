@@ -157,13 +157,13 @@ class graphCreationClass:
             nodeInfoCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip() + "+" + str(nodeType.placeType)    #state,city to split
             if tple[1] is not None:
                 nodeinfoSnwd = str(tple[1]) + "+" + str(nodeType.snowType)
-                print("previous eeeeeeeeeeeeeeeeee: ", nodeType.snowType, nodeinfoSnwd)
+                #print("previous eeeeeeeeeeeeeeeeee: ", nodeType.snowType, nodeinfoSnwd)
                 if nodeinfoSnwd not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[nodeinfoSnwd] = graphCreationClass.startNodeId
                     graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeinfoSnwd
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.snowType
-                        print("eeeeeeeeeeeeeeeee: ", nodeType.snowType)
+                        #print("eeeeeeeeeeeeeeeee: ", nodeType.snowType)
                     graphCreationClass.startNodeId += 1
                 
                 #edge for town/city to snwd
@@ -187,7 +187,7 @@ class graphCreationClass:
                     graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoTime
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.timeType
-                        print("fffffffffffffffffff: ", nodeType.timeType)
+                        #print("fffffffffffffffffff: ", nodeType.timeType)
                     graphCreationClass.startNodeId += 1
                     
                 #edge for temp to time
@@ -200,7 +200,7 @@ class graphCreationClass:
     def writeIntoFile(self, outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
         #write node type file
         df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient='index')
-        df.to_csv(outNodeTypeFile, sep='\t')
+        df.to_csv(outNodeTypeFile, header =["nodeType"], sep='\t')
         
         #write into outNodeNameToIdFile
         df = pd.DataFrame.from_dict(graphCreationClass.graphNodeNameToIdMap, orient='index')
