@@ -171,7 +171,7 @@ class graphCreationClass:
     def writeIntoFile(self, outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
         #write node type file
         df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient='index')
-        df.to_csv(outNodeTypeFile, index=False)
+        df.to_csv(outNodeTypeFile)
         
         
     
@@ -195,6 +195,9 @@ def main():
     outNodeNameToIdFile = "../output/outNodeNameToIdFile.csv"
     outEdgeListFile = "../output/outEdgeListFile.csv"
     print ('len graphCreationClass edgelist after: ', len(graphCreationClass.edgeList))
+    
+    os.remove(outNodeTypeFile) if os.path.exists(outNodeTypeFile) else None
+
     gcObj.writeIntoFile(outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile)
     
 if __name__== "__main__":
