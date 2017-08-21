@@ -7,6 +7,7 @@ Created on Tue Aug 15 12:49:10 2017
 """
 
 #main function for creation graph data
+import os
 from readCityState import readcitySatesExecute
 from extractweatherData import readUSAStationIdToNameMap
 from blist import blist
@@ -171,13 +172,18 @@ class graphCreationClass:
     def writeIntoFile(self, outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
         #write node type file
         df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient='index')
-        df.to_csv(outNodeTypeFile)
         
+        df.to_csv(outNodeTypeFile, sep='\t')
+
         
     
         #write edge list
-        
     
+    
+    def testOnlyDictionaryWrite(self):
+        dic = {5:0, 3:0, 4:1}
+        df = pd.DataFrame.from_dict(dic, orient='index')
+        df.to_csv("../testoutfile", sep='\t')
     
     
 def main():
@@ -191,10 +197,12 @@ def main():
     gcObj.readstationWeatherOutput(outfileUSAStationId, inFileStationWeather)
     
     
+    #gcObj.testDictionaryWrite()
+    
     outNodeTypeFile = "../output/outNodeTypeFile.csv"
     outNodeNameToIdFile = "../output/outNodeNameToIdFile.csv"
     outEdgeListFile = "../output/outEdgeListFile.csv"
-    print ('len graphCreationClass edgelist after: ', len(graphCreationClass.edgeList))
+    print ('len graphCreationClass edgelist after: ', len(graphCreationClass.edgeList), len(graphCreationClass.graNodeTypeMap))
     
     os.remove(outNodeTypeFile) if os.path.exists(outNodeTypeFile) else None
 
