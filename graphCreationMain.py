@@ -171,7 +171,7 @@ class graphCreationClass:
                 #edge for town/city to temperature
                 #cityNodeId = graphCreationClass.graphNodeNameToIdMap[stationCity]
                 if nodeInfoCity in graphCreationClass.graphNodeNameToIdMap:
-                    edgeProp = 'same'                                       #lower hierarchical relation
+                    edgeProp = 'same'                                        #lower hierarchical relation
                     graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoCity], graphCreationClass.graphNodeNameToIdMap[nodeinfoSnwd], edgeProp])             
                     graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeinfoSnwd], graphCreationClass.graphNodeNameToIdMap[nodeInfoCity], edgeProp])             
               
