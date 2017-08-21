@@ -8,10 +8,12 @@ Created on Tue Aug 15 12:49:10 2017
 
 #main function for creation graph data
 import os
+import numpy as np
+import pandas as pd
+from blist import blist
+
 from readCityState import readcitySatesExecute
 from extractweatherData import readUSAStationIdToNameMap
-from blist import blist
-import pandas as pd
 
 class nodeType:
     placeType = 1
@@ -108,7 +110,7 @@ class graphCreationClass:
             nodeInfoCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip() + "+" + str(nodeType.placeType) #state,city to split
             #print ("stationCity: ", stationCity, type(tple), type(tple[1]))
             
-            if tple[1] is not None:
+            if not np.isnan(tple[0]) and not np.isnan(tple[1]): 
                 nodeInfoTmperature = "[" + str(tple[2]) + "," + str(tple[1]) + "]" + "+" + str(nodeType.tempType)
                 if nodeInfoTmperature not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[nodeInfoTmperature] = graphCreationClass.startNodeId
@@ -117,7 +119,7 @@ class graphCreationClass:
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.tempType
                     graphCreationClass.startNodeId += 1
-                    
+                
                  #edge for town/city to temperature
                  #cityNodeId = graphCreationClass.graphNodeNameToIdMap[stationCity]
                 if nodeInfoCity in graphCreationClass.graphNodeNameToIdMap:
@@ -130,7 +132,7 @@ class graphCreationClass:
         df['stationPrcp'] = list(zip(df["stationID"], df["prcp"]))        #station temperature
         for tple in df['stationPrcp']:
             nodeInfoCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip() + "+" + str(nodeType.placeType)     #state,city to split
-            if tple[1] is not None:
+            if not np.isnan(tple[0]) and not np.isnan(tple[1]): 
                 nodeInfoprcp = str(tple[1]) + "+" + str(nodeType.prcpType)
                 if nodeInfoprcp not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[nodeInfoprcp] = graphCreationClass.startNodeId
@@ -155,7 +157,7 @@ class graphCreationClass:
         print ("stationsnwd describe", df['stationsnwd'].describe())
         for tple in df['stationsnwd'].unique():
             nodeInfoCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip() + "+" + str(nodeType.placeType)    #state,city to split
-            if tple[1] is not None:
+            if not np.isnan(tple[0]) and not np.isnan(tple[1]):                      # tple[1] is not None:
                 nodeinfoSnwd = str(tple[1]) + "+" + str(nodeType.snowType)
                 #print("previous eeeeeeeeeeeeeeeeee: ", nodeType.snowType, nodeinfoSnwd)
                 if nodeinfoSnwd not in graphCreationClass.graphNodeNameToIdMap:
@@ -178,7 +180,7 @@ class graphCreationClass:
         df['tempTime'] = list(zip(df["tmax"], df["tmin"],df["month"], df["day"], df["year"]))        #station temperature
 
         for tple in df['tempTime'].unique():
-            if tple[1].isNull and tple[3] is not None:         #temp tmin and time day is not None
+            if not np.isnan(tple[1]) and not np.isnan(tple[3]):          #temp tmin and time day is not None
                 nodeInfoTmperature = "[" + str(tple[1]) + "," + str(tple[0]) + "]" + "+" + str(nodeType.tempType)
                 nodeInfoTime = str(tple[2]) + "/" + str(tple[3]) + "/" + str(tple[4]) + "+" + str(nodeType.timeType)
                 
@@ -209,7 +211,7 @@ class graphCreationClass:
         #get time month/day/year and prcp relations
         df['prcpTime'] = list(zip(df["prcp"], df["month"], df["day"], df["year"]))        #station temperature
         for tple in df['prcpTime'].unique():
-            if tple[0] is not None and tple[3] is not None:         #temp tmin and time day is not None
+            if not np.isnan(tple[0]) and not np.isnan(tple[3]):           #temp tmin and time day is not None
                 nodeInfoPrcp = str(tple[0]) + "+" + str(nodeType.prcpType)
                 nodeInfoTime = str(tple[1]) + "/" + str(tple[2]) + "/" + str(tple[3]) + "+" + str(nodeType.timeType)
                 
@@ -238,7 +240,7 @@ class graphCreationClass:
         #get time month/day/year and snwd relations
         df['snwdTime'] = list(zip(df["snwd"], df["month"], df["day"], df["year"]))        #station temperature
         for tple in df['snwdTime'].unique():
-            if tple[0] is not None and tple[3] is not None:         #temp tmin and time day is not None
+            if not np.isnan(tple[0]) and not np.isnan(tple[3]):      #tple[0] is not None and tple[3] is not None:         #temp tmin and time day is not None
                 nodeInfoSnwd = str(tple[0]) + "+" + str(nodeType.snowType)
                 nodeInfoTime = str(tple[1]) + "/" + str(tple[2]) + "/" + str(tple[3]) + "+" + str(nodeType.timeType)
                 
