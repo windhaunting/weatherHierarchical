@@ -207,8 +207,8 @@ class graphCreationClass:
         df.to_csv(outNodeNameToIdFile, header = ["node Id"], sep='\t', index=True)
         
         #write into outEdgeListFile
-        df = pd.DataFrame.from_dict(graphCreationClass.edgeList, orient='index')
-        df.to_csv(outEdgeListFile, header = ["node Id"], sep='\t', index=True)
+        df = pd.DataFrame(graphCreationClass.edgeList, columns=["edge list"])
+        df.to_csv(outEdgeListFile, sep='\t', index=True)
         
         #write edge list
     
