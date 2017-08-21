@@ -100,7 +100,6 @@ class graphCreationClass:
         #create edge list between city/town and weather
         df['stationTemp'] = list(zip(df["stationID"], df["tmax"], df["tmin"]))        #station temperature
         #print ("stationTemp: ", df['stationTemp'])
-        
         #get temperature
         for tple in df['stationTemp'].unique():
             stationCity = stationIDCodesUSAToNameMap[tple[0]].split(',')[1].lower().strip()     #state,city
@@ -136,6 +135,7 @@ class graphCreationClass:
                     
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.prcpType
+                        #print("ddddddddddddddddddd: ", nodeType.prcpType)
                     graphCreationClass.startNodeId += 1
         
         #get snow type
@@ -148,6 +148,8 @@ class graphCreationClass:
                     graphCreationClass.graphNodeNameToIdMap[prcp] = graphCreationClass.startNodeId
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.snowType
+                        print("eeeeeeeeeeeeeeeee: ", nodeType.snowType)
+
                     graphCreationClass.startNodeId += 1
                     
         #get time month/day/year
@@ -156,13 +158,15 @@ class graphCreationClass:
         for tple in df['tempTime'].unique():
             
             if tple[1] is not None and tple[3] is not None:         #temp tmin and time day is not None
-                tmperature = str(tple[2]) + "--" + str(tple[1])
+                tmperature = str(tple[1]) + "--" + str(tple[0])
                 time = str(tple[2]) + "/" + str(tple[3]) + "/" + str(tple[4])
                 
                 if tmperature not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.tempType
+                        print("fffffffffffffffffff: ", nodeType.tempType)
+
                     graphCreationClass.startNodeId += 1
                 if time not in graphCreationClass.graphNodeNameToIdMap:
                     graphCreationClass.graphNodeNameToIdMap[tmperature] = graphCreationClass.startNodeId
@@ -172,9 +176,8 @@ class graphCreationClass:
     def writeIntoFile(self, outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
         #write node type file
         df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient='index')
-        
         df.to_csv(outNodeTypeFile, sep='\t')
-
+        
         
     
         #write edge list
