@@ -178,7 +178,7 @@ class graphCreationClass:
         df['tempTime'] = list(zip(df["tmax"], df["tmin"],df["month"], df["day"], df["year"]))        #station temperature
 
         for tple in df['tempTime'].unique():
-            if tple[1] is not None and tple[3] is not None:         #temp tmin and time day is not None
+            if tple[1].isNull and tple[3] is not None:         #temp tmin and time day is not None
                 nodeInfoTmperature = "[" + str(tple[1]) + "," + str(tple[0]) + "]" + "+" + str(nodeType.tempType)
                 nodeInfoTime = str(tple[2]) + "/" + str(tple[3]) + "/" + str(tple[4]) + "+" + str(nodeType.timeType)
                 
@@ -187,6 +187,15 @@ class graphCreationClass:
                     graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoTime
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.timeType
+                        #print("fffffffffffffffffff: ", nodeType.timeType)
+                    graphCreationClass.startNodeId += 1
+                 
+                
+                if nodeInfoTmperature not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[nodeInfoTime] = graphCreationClass.startNodeId
+                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoTmperature
+                    if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.tempType
                         #print("fffffffffffffffffff: ", nodeType.timeType)
                     graphCreationClass.startNodeId += 1
                     
@@ -209,6 +218,14 @@ class graphCreationClass:
                     graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoTime
                     if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
                         graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.timeType
+                        #print("fffffffffffffffffff: ", nodeType.timeType)
+                    graphCreationClass.startNodeId += 1
+                
+                if nodeInfoPrcp not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[nodeInfoTime] = graphCreationClass.startNodeId
+                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoPrcp
+                    if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.prcpType
                         #print("fffffffffffffffffff: ", nodeType.timeType)
                     graphCreationClass.startNodeId += 1
                     
