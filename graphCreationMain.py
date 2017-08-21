@@ -200,13 +200,16 @@ class graphCreationClass:
     def writeIntoFile(self, outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
         #write node type file
         df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient='index')
-        df.to_csv(outNodeTypeFile, header =["nodeType"], sep='\t')
+        df.to_csv(outNodeTypeFile, header = ["node Type"], sep='\t', index=True)
         
         #write into outNodeNameToIdFile
         df = pd.DataFrame.from_dict(graphCreationClass.graphNodeNameToIdMap, orient='index')
-        df.to_csv(outNodeNameToIdFile, sep='\t')
+        df.to_csv(outNodeNameToIdFile, header = ["node Id"], sep='\t', index=True)
         
-    
+        #write into outEdgeListFile
+        df = pd.DataFrame.from_dict(graphCreationClass.edgeList, orient='index')
+        df.to_csv(outEdgeListFile, header = ["node Id"], sep='\t', index=True)
+        
         #write edge list
     
     
@@ -235,7 +238,9 @@ def main():
     print ('len graphCreationClass edgelist after: ', len(graphCreationClass.edgeList), len(graphCreationClass.graNodeTypeMap))
     
     os.remove(outNodeTypeFile) if os.path.exists(outNodeTypeFile) else None
-
+    os.remove(outNodeNameToIdFile) if os.path.exists(outNodeNameToIdFile) else None
+    os.remove(outEdgeListFile) if os.path.exists(outEdgeListFile) else None
+    
     gcObj.writeIntoFile(outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile)
     
 if __name__== "__main__":
