@@ -195,20 +195,46 @@ class graphCreationClass:
                     edgeProp = 'same'                                        #lower hierarchical relation
                     graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoTmperature], graphCreationClass.graphNodeNameToIdMap[nodeInfoTime], edgeProp])             
                     graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoTime], graphCreationClass.graphNodeNameToIdMap[nodeInfoTmperature], edgeProp])             
-              
+        
+        
+        #get time month/day/year and prcp relations
+        df['prcpTime'] = list(zip(df["prcp"], df["month"], df["day"], df["year"]))        #station temperature
+
+        for tple in df['prcpTime'].unique():
+            if tple[1] is not None and tple[3] is not None:         #temp tmin and time day is not None
+                nodeInfoPrcp = str(tple[0]) + "+" + str(nodeType.tempType)
+                nodeInfoTime = str(tple[1) + "/" + str(tple[2]) + "/" + str(tple[3]) + "+" + str(nodeType.timeType)
+                
+                if nodeInfoTime not in graphCreationClass.graphNodeNameToIdMap:
+                    graphCreationClass.graphNodeNameToIdMap[nodeInfoTime] = graphCreationClass.startNodeId
+                    graphCreationClass.gNodeIdToNameMap[graphCreationClass.startNodeId] = nodeInfoTime
+                    if graphCreationClass.startNodeId not in graphCreationClass.graNodeTypeMap:
+                        graphCreationClass.graNodeTypeMap[graphCreationClass.startNodeId] = nodeType.timeType
+                        #print("fffffffffffffffffff: ", nodeType.timeType)
+                    graphCreationClass.startNodeId += 1
+                    
+                #edge for temp to time
+                if nodeInfoTmperature in graphCreationClass.graphNodeNameToIdMap:
+                    edgeProp = 'same'                                        #lower hierarchical relation
+                    graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoTmperature], graphCreationClass.graphNodeNameToIdMap[nodeInfoTime], edgeProp])             
+                    graphCreationClass.edgeList.append([graphCreationClass.graphNodeNameToIdMap[nodeInfoTime], graphCreationClass.graphNodeNameToIdMap[nodeInfoTmperature], edgeProp])             
+
+        
     #write graphNodeNameToIdMap, graNodeTypeMap, and edgeList
     def writeIntoFile(self, outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile):
         #write node type file
+        os.remove(outNodeTypeFile) if os.path.exists(outNodeTypeFile) else None
         df = pd.DataFrame.from_dict(graphCreationClass.graNodeTypeMap, orient='index')
         df.to_csv(outNodeTypeFile, header = ["node Type"], sep='\t', index=True)
         
         #write into outNodeNameToIdFile
+        os.remove(outNodeNameToIdFile) if os.path.exists(outNodeNameToIdFile) else None
         df = pd.DataFrame.from_dict(graphCreationClass.graphNodeNameToIdMap, orient='index')
         df.to_csv(outNodeNameToIdFile, header = ["node Id"], sep='\t', index=True)
         
         #write into outEdgeListFile
-        df = pd.DataFrame(graphCreationClass.edgeList, columns=["edge list"])
-        df.to_csv(outEdgeListFile, sep='\t', index=True)
+        df = pd.DataFrame(list(graphCreationClass.edgeList))
+        df.to_csv(outEdgeListFile, header = ["node Id source", "node Id dst", "edge hierarchical prop"], sep='\t', index=False)
         
         #write edge list
     
@@ -237,8 +263,6 @@ def main():
     outEdgeListFile = "../output/outEdgeListFile.tsv"
     print ('len graphCreationClass edgelist after: ', len(graphCreationClass.edgeList), len(graphCreationClass.graNodeTypeMap))
     
-    os.remove(outNodeTypeFile) if os.path.exists(outNodeTypeFile) else None
-    os.remove(outNodeNameToIdFile) if os.path.exists(outNodeNameToIdFile) else None
     os.remove(outEdgeListFile) if os.path.exists(outEdgeListFile) else None
     
     gcObj.writeIntoFile(outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile)
