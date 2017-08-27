@@ -279,6 +279,7 @@ class graphCreationClass:
         df.to_csv(outNodeNameToIdFile, header = ["node Id"], sep='\t', index=True)
         
         #write into outEdgeListFile
+        os.remove(outEdgeListFile) if os.path.exists(outEdgeListFile) else None
         df = pd.DataFrame(list(graphCreationClass.edgeList))
         df.to_csv(outEdgeListFile, header = ["node Id source", "node Id dst", "edge hierarchical prop"], sep='\t', index=False)
         
@@ -308,7 +309,6 @@ def main():
     outEdgeListFile = "../output/outEdgeListFile.tsv"
     print ('len graphCreationClass edgelist after: ', len(graphCreationClass.edgeList), len(graphCreationClass.graNodeTypeMap))
     
-    os.remove(outEdgeListFile) if os.path.exists(outEdgeListFile) else None
     
     gcObj.writeIntoFile(outNodeTypeFile, outNodeNameToIdFile, outEdgeListFile)
     
