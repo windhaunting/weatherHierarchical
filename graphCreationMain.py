@@ -282,7 +282,6 @@ class graphCreationClass:
         df = pd.DataFrame(list(graphCreationClass.edgeList))
         df.to_csv(outEdgeListFile, header = ["node Id source", "node Id dst", "edge hierarchical prop"], sep='\t', index=False)
         
-        #write edge list
     
     
     def testOnlyDictionaryWrite(self):
